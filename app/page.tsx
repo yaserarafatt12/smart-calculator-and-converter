@@ -259,19 +259,20 @@ export default function Home() {
 
   return (
     <main className="min-h-screen sm:py-8 sm:px-4 flex flex-col items-center justify-center relative overflow-hidden font-sans">
-      {/* 3D Ambient Background Spheres */}
-      <div className="hidden sm:block absolute w-96 h-96 rounded-full bg-indigo-500/20 dark:bg-violet-600/30 blur-3xl -top-20 -left-20 pointer-events-none" />
-      <div className="hidden sm:block absolute w-80 h-80 rounded-full bg-purple-500/20 dark:bg-indigo-600/25 blur-3xl -bottom-20 -right-20 pointer-events-none" />
+      {/* Ambient Midnight Navy Radial Glow Pools */}
+      <div className="hidden sm:block absolute w-[28rem] h-[28rem] rounded-full bg-sky-400/20 dark:bg-sky-500/20 blur-[110px] -top-28 -left-24 pointer-events-none" />
+      <div className="hidden sm:block absolute w-[26rem] h-[26rem] rounded-full bg-indigo-500/20 dark:bg-indigo-600/25 blur-[110px] -bottom-28 -right-24 pointer-events-none" />
+      <div className="hidden sm:block absolute w-72 h-72 rounded-full bg-violet-400/15 dark:bg-violet-500/15 blur-[95px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      {/* Phone Chassis Container with Ultra Smooth Transition */}
+      {/* Phone Chassis Container — Midnight Navy Tempered Glass */}
       <div
         className={`w-full min-h-screen ${
           activeTab === 'converter'
-            ? 'sm:min-h-[750px] sm:max-w-[430px]'
+            ? 'sm:min-h-[750px] sm:max-w-[436px]'
             : appMode === 'complete'
-            ? 'sm:min-h-[820px] sm:max-w-[430px]'
-            : 'sm:min-h-[720px] sm:max-w-[420px]'
-        } sm:rounded-[44px] phone-chassis p-5 sm:p-6 shadow-2xl relative overflow-hidden flex flex-col justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-10`}
+            ? 'sm:min-h-[820px] sm:max-w-[436px]'
+            : 'sm:min-h-[720px] sm:max-w-[424px]'
+        } sm:rounded-[44px] phone-chassis p-5 sm:p-6 relative overflow-hidden flex flex-col justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-10`}
       >
         {/* Top Header Bar with Language Switcher & Settings */}
         <Header
@@ -316,17 +317,17 @@ export default function Home() {
                 onDismiss={() => setFormattedError(null)}
               />
 
-              {/* Mode Switcher Pill: Positioned DIRECTLY ABOVE HASIL CARD */}
+              {/* Mode Switcher Pill: iOS 26 Liquid Glass Segmented Control */}
               <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center gap-1 bg-slate-200/90 dark:bg-slate-800/90 p-1 rounded-2xl border border-slate-300/80 dark:border-slate-700/80 shadow-sm transition-all duration-300">
+                <div className="flex items-center gap-1 liquid-glass-track p-1 rounded-full transition-all duration-300">
                   <button
                     type="button"
                     id="mode-pill-default"
                     onClick={() => handleModeChange('default')}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all duration-300 ease-out btn-press-effect ${
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-extrabold tracking-tight transition-all duration-300 ease-out btn-press-effect ${
                       appMode === 'default'
-                        ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 shadow-md font-black scale-[1.02]'
-                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        ? 'liquid-glass-lens-neutral text-sky-700 dark:text-sky-200 font-black scale-[1.02]'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     {t.defaultMode}
@@ -335,10 +336,10 @@ export default function Home() {
                     type="button"
                     id="mode-pill-complete"
                     onClick={() => handleModeChange('complete')}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all duration-300 ease-out btn-press-effect ${
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-extrabold tracking-tight transition-all duration-300 ease-out btn-press-effect ${
                       appMode === 'complete'
-                        ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/30 font-black scale-[1.02]'
-                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        ? 'liquid-glass-lens text-white font-black scale-[1.02]'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     {t.completeMode}
@@ -346,7 +347,7 @@ export default function Home() {
                 </div>
 
                 {appMode === 'complete' && memory.hasValue && (
-                  <span className="px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/40 text-[10px] font-black animate-pulse">
+                  <span className="px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] text-[10px] font-black animate-pulse">
                     {t.memoryActive}
                   </span>
                 )}
@@ -405,8 +406,8 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <footer className="mt-4 pt-2 text-center text-[11px] text-slate-500 dark:text-slate-400 font-medium border-t border-slate-200/50 dark:border-slate-800/40">
-          Smart Calculator & Unit Converter &copy; 2026. Mode: {appMode === 'complete' ? t.completeMode : t.defaultMode}.
+        <footer className="mt-4 pt-2.5 text-center text-[11px] text-slate-500 dark:text-slate-400/90 font-medium border-t border-slate-900/10 dark:border-white/10">
+          Smart Calculator &amp; Unit Converter &copy; 2026 &middot; Mode: {appMode === 'complete' ? t.completeMode : t.defaultMode}
         </footer>
 
         {/* Settings & Guidebook Modal Overlay */}
@@ -420,24 +421,26 @@ export default function Home() {
           historyCount={history.length}
         />
 
-        {/* History Modal Overlay */}
+        {/* History Modal Overlay — Midnight Navy Tempered Glass Bottom Sheet */}
         {showHistoryModal && (
           <div
             onClick={() => setShowHistoryModal(false)}
-            className="absolute inset-0 z-50 bg-black/60 backdrop-blur-md flex flex-col justify-end animate-in fade-in duration-200 cursor-pointer"
+            className="absolute inset-0 z-50 bg-slate-950/65 backdrop-blur-md flex flex-col justify-end animate-fade-in cursor-pointer"
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="bg-white/95 dark:bg-[#121519]/95 backdrop-blur-2xl rounded-t-[36px] p-6 max-h-[85%] overflow-y-auto border-t border-white/80 dark:border-slate-700/80 shadow-2xl space-y-4 animate-in slide-in-from-bottom duration-250 cursor-default"
+              className="tempered-glass-card rounded-t-[36px] border-x-0 border-b-0 p-5 sm:p-6 max-h-[85%] overflow-y-auto space-y-4 animate-sheet-up cursor-default"
             >
+              {/* iOS Grabber Pill */}
+              <div className="w-10 h-1 rounded-full bg-slate-400/40 dark:bg-white/25 mx-auto -mt-1 mb-1" />
               <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold tracking-tight text-indigo-600 dark:text-indigo-400">
+                <span className="text-xs font-extrabold tracking-wide uppercase text-sky-700 dark:text-sky-300">
                   {t.historyTitle}
                 </span>
                 <button
                   type="button"
                   onClick={() => setShowHistoryModal(false)}
-                  className="text-xs font-bold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 btn-press-effect"
+                  className="text-xs font-bold text-slate-700 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white px-3.5 py-1.5 rounded-full tempered-glass-surface btn-press-effect"
                 >
                   {t.close}
                 </button>

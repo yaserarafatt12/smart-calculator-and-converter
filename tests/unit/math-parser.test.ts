@@ -86,7 +86,7 @@ describe('math-parser engine', () => {
       const res = evaluateMathExpression('   ');
       expect(res).toEqual({ success: false, error: 'EMPTY_INPUT', index: 0 });
 
-      const formatted = getFormattedError(res as any);
+      const formatted = getFormattedError(res as any, 'id');
       expect(formatted.title).toBe('Masukan Kosong');
     });
 
@@ -94,7 +94,7 @@ describe('math-parser engine', () => {
       const res = evaluateMathExpression('1234567890123456');
       expect(res).toEqual({ success: false, error: 'NUMBER_TOO_LONG', index: 0 });
 
-      const formatted = getFormattedError(res as any);
+      const formatted = getFormattedError(res as any, 'id');
       expect(formatted.title).toBe('Angka Terlalu Panjang');
     });
 
@@ -184,7 +184,7 @@ describe('math-parser engine', () => {
     });
 
     it('should format error messages with getErrorMessage helper', () => {
-      const msg = getErrorMessage('DIVISION_BY_ZERO', { index: 5 });
+      const msg = getErrorMessage('DIVISION_BY_ZERO', { index: 5, language: 'id' });
       expect(msg.title).toBe('Pembagian dengan Nol');
       expect(msg.hint).toContain('tidak didefinisikan');
       expect(msg.index).toBe(5);

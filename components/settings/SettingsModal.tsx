@@ -33,8 +33,6 @@ import {
   Smartphone,
   Share2,
   Settings,
-  PlusSquare,
-  Bookmark,
 } from 'lucide-react';
 import { Language, TRANSLATIONS } from '@/lib/i18n/translations';
 
@@ -106,7 +104,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       id: 'length',
       name: language === 'id' ? 'Panjang & Jarak' : 'Length & Distance',
       desc: language === 'id' ? 'Konversi dimensi benda, tinggi badan, & jarak tempuh (mm, cm, m, km, inch, feet, yard, mile).' : 'Convert object dimensions, heights, & travel distances (mm, cm, m, km, in, ft, yd, mi).',
-      icon: <Ruler className="w-4 h-4 text-indigo-500" />,
+      icon: <Ruler className="w-4 h-4 text-sky-500" />,
     },
     {
       id: 'weight',
@@ -188,26 +186,31 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     },
   ];
 
+  const guideRowHeaderClass =
+    'w-full p-3.5 text-left font-extrabold text-xs flex items-center justify-between text-slate-900 dark:text-white hover:bg-sky-500/10 dark:hover:bg-white/[0.06] transition-colors';
+  const guideRowBodyClass =
+    'p-3.5 bg-white/55 dark:bg-[#070f20]/60 text-xs space-y-2.5 text-slate-700 dark:text-slate-300 font-medium border-t border-slate-900/10 dark:border-white/10';
+
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-lg flex items-start sm:items-center justify-center p-3.5 sm:p-4 pt-4 sm:pt-4 animate-in fade-in duration-200 cursor-pointer font-sans"
+      className="fixed inset-0 z-[100] bg-slate-950/75 backdrop-blur-md flex items-start sm:items-center justify-center p-3.5 sm:p-4 pt-4 animate-fade-in cursor-pointer font-sans"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-lg max-h-[92vh] sm:max-h-[85vh] bg-[#cbd5e1] dark:bg-[#11151c] backdrop-blur-2xl rounded-[32px] border border-slate-400/80 dark:border-slate-800 shadow-2xl overflow-y-auto p-5 sm:p-6 space-y-4 animate-in zoom-in-95 duration-200 cursor-default text-slate-900 dark:text-white"
+        className="w-full max-w-lg max-h-[92vh] sm:max-h-[85vh] tempered-glass-card rounded-[32px] overflow-y-auto p-5 sm:p-6 space-y-4 animate-modal-pop cursor-default text-slate-900 dark:text-white"
       >
         {/* Header Title Bar with Settings Gear Icon */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-400/80 dark:border-slate-800">
+        <div className="flex items-center justify-between pb-3.5 border-b border-slate-900/10 dark:border-white/12">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-2xl bg-indigo-600 text-white shadow-md">
-              <Settings strokeWidth={2.5} className="w-5 h-5 animate-spin-slow" />
+            <div className="p-2 rounded-2xl liquid-glass-lens text-white">
+              <Settings strokeWidth={2.5} className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">
                 {t.settingsTitle}
               </h2>
-              <p className="text-[11px] text-slate-700 dark:text-slate-400 font-semibold">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
                 {t.manageSessionSub}
               </p>
             </div>
@@ -216,26 +219,25 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-slate-300/80 dark:bg-slate-800 transition-colors btn-press-effect"
+            className="p-2 rounded-full tempered-glass-surface text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors btn-press-effect"
+            aria-label={t.close}
           >
-            <X strokeWidth={2.5} className="w-5 h-5" />
+            <X strokeWidth={2.5} className="w-4 h-4" />
           </button>
         </div>
 
         {/* SECTION 1: Install App (PWA) Banner */}
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 text-white shadow-md flex items-center justify-between gap-3">
+        <div className="p-4 rounded-2xl liquid-glass-lens text-white flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-white/20 backdrop-blur-md shrink-0">
-              <Smartphone className="w-6 h-6 text-white" />
+            <div className="p-2.5 rounded-2xl bg-white/20 backdrop-blur-md border border-white/25 shrink-0">
+              <Smartphone className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="text-xs sm:text-sm font-black tracking-tight">
                 {t.pwaInstallTitle}
               </div>
-              <div className="text-[11px] text-indigo-100 font-medium mt-0.5">
-                {isStandalone
-                  ? t.pwaInstalledText
-                  : t.pwaInstallDesc}
+              <div className="text-[11px] text-sky-100/90 font-medium mt-0.5">
+                {isStandalone ? t.pwaInstalledText : t.pwaInstallDesc}
               </div>
             </div>
           </div>
@@ -244,9 +246,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <button
               type="button"
               onClick={handleInstallPWA}
-              className="px-3.5 py-2 rounded-xl text-xs font-black bg-white text-indigo-600 hover:bg-indigo-50 transition-all btn-press-effect shrink-0 flex items-center gap-1.5 shadow-md"
+              className="px-3.5 py-2 rounded-full text-xs font-black bg-white text-indigo-700 hover:bg-sky-50 transition-all btn-press-effect shrink-0 flex items-center gap-1.5 shadow-md"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-3.5 h-3.5" />
               <span>{t.installBtn}</span>
             </button>
           )}
@@ -254,10 +256,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
         {/* iOS / Safari Installation Instructions Modal Box */}
         {showIOSInstructions && !isStandalone && (
-          <div className="p-4 rounded-2xl bg-slate-300/90 dark:bg-slate-800/90 border border-slate-400 dark:border-slate-700/80 space-y-2 text-xs text-slate-900 dark:text-slate-200 animate-in fade-in duration-200">
+          <div className="p-4 rounded-2xl tempered-glass-surface space-y-2 text-xs text-slate-900 dark:text-slate-200 animate-modal-pop">
             <div className="flex items-center justify-between font-extrabold text-slate-900 dark:text-white">
               <span className="flex items-center gap-1.5">
-                <Share2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <Share2 className="w-4 h-4 text-sky-600 dark:text-sky-300" />
                 {t.iosGuideTitle}
               </span>
               <button
@@ -269,23 +271,17 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </button>
             </div>
             <ol className="list-decimal pl-5 space-y-2 font-medium text-[11px]">
-              <li>
-                {t.iosStep1}
-              </li>
-              <li>
-                {t.iosStep2}
-              </li>
-              <li>
-                {t.iosStep3}
-              </li>
+              <li>{t.iosStep1}</li>
+              <li>{t.iosStep2}</li>
+              <li>{t.iosStep3}</li>
             </ol>
           </div>
         )}
 
-        {/* SECTION 2: Clean Guest Profile Card without 'Active' badge */}
-        <div className="p-3.5 rounded-2xl bg-slate-300/80 dark:bg-slate-800/60 border border-slate-400/80 dark:border-slate-700/60 flex items-center justify-between">
+        {/* SECTION 2: Clean Guest Profile Card */}
+        <div className="p-3.5 rounded-2xl tempered-glass-surface flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md font-extrabold text-sm">
+            <div className="w-9 h-9 rounded-2xl liquid-glass-lens text-white flex items-center justify-center font-extrabold text-sm">
               <UserCheck strokeWidth={2.5} className="w-4 h-4" />
             </div>
             <div className="text-xs sm:text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">
@@ -293,49 +289,50 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </div>
           </div>
 
-          <span className="text-xs font-extrabold text-slate-800 dark:text-slate-300">
+          <span className="text-xs font-extrabold tabular-nums text-sky-700 dark:text-sky-300 px-2.5 py-1 rounded-full bg-sky-500/10 border border-sky-400/25">
             {historyCount} {language === 'id' ? 'Riwayat' : 'History'}
           </span>
         </div>
 
         {/* SECTION 3: Appearance & Language Controls */}
-        <div className="space-y-3">
-          <h3 className="text-xs font-extrabold uppercase tracking-widest text-indigo-700 dark:text-indigo-400">
+        <div className="space-y-2.5">
+          <h3 className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300">
             {t.appSettingsGroup}
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {/* Theme Toggle */}
-            <div className="p-3.5 rounded-2xl bg-slate-300/80 dark:bg-slate-800/90 border border-slate-400/80 dark:border-slate-700/80 flex items-center justify-between">
+            <div className="p-3.5 rounded-2xl tempered-glass-surface flex items-center justify-between">
               <div className="flex items-center gap-2">
                 {isDark ? (
-                  <Moon strokeWidth={2.5} className="w-4 h-4 text-amber-400" />
+                  <Moon strokeWidth={2.5} className="w-4 h-4 text-amber-300" />
                 ) : (
-                  <Sun strokeWidth={2.5} className="w-4 h-4 text-amber-600" />
+                  <Sun strokeWidth={2.5} className="w-4 h-4 text-amber-500" />
                 )}
                 <span className="text-xs font-extrabold text-slate-900 dark:text-white">{t.appearance}</span>
               </div>
 
               <button
                 type="button"
+                aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
                 onClick={onToggleTheme}
-                className="px-3 py-1.5 rounded-xl text-xs font-extrabold bg-indigo-600 text-white hover:bg-indigo-700 transition-all btn-press-effect shadow-sm"
+                className="px-3 py-1.5 rounded-full text-xs font-extrabold liquid-glass-lens text-white transition-all btn-press-effect"
               >
                 {isDark ? t.darkMode : t.lightMode}
               </button>
             </div>
 
             {/* Language Toggle */}
-            <div className="p-3.5 rounded-2xl bg-slate-300/80 dark:bg-slate-800/90 border border-slate-400/80 dark:border-slate-700/80 flex items-center justify-between">
+            <div className="p-3.5 rounded-2xl tempered-glass-surface flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Globe strokeWidth={2.5} className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <Globe strokeWidth={2.5} className="w-4 h-4 text-sky-600 dark:text-sky-300" />
                 <span className="text-xs font-extrabold text-slate-900 dark:text-white">{t.languageLabel}</span>
               </div>
 
               <button
                 type="button"
                 onClick={onToggleLanguage}
-                className="px-3 py-1.5 rounded-xl text-xs font-extrabold bg-indigo-600 text-white hover:bg-indigo-700 transition-all btn-press-effect shadow-sm"
+                className="px-3 py-1.5 rounded-full text-xs font-extrabold liquid-glass-lens text-white transition-all btn-press-effect"
               >
                 {language === 'en' ? 'English' : 'Indonesia'}
               </button>
@@ -344,31 +341,31 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
 
         {/* SECTION 4: Complete Guidebook */}
-        <div className="space-y-3 pt-1">
+        <div className="space-y-2.5 pt-1">
           <div className="flex items-center gap-2">
-            <BookOpen strokeWidth={2.5} className="w-4 h-4 text-indigo-700 dark:text-indigo-400" />
-            <h3 className="text-xs font-extrabold uppercase tracking-widest text-indigo-700 dark:text-indigo-400">
+            <BookOpen strokeWidth={2.5} className="w-4 h-4 text-sky-700 dark:text-sky-300" />
+            <h3 className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300">
               {t.guidebookTitle}
             </h3>
           </div>
 
           <div className="space-y-2">
             {/* Guide 1: Kegunaan Utama Aplikasi */}
-            <div className="rounded-2xl border border-slate-400/80 dark:border-slate-800 overflow-hidden">
+            <div className="rounded-2xl tempered-glass-surface overflow-hidden">
               <button
                 type="button"
                 onClick={() => toggleGuide('purpose')}
-                className="w-full p-3.5 bg-slate-300/80 dark:bg-slate-800/80 text-left font-extrabold text-xs flex items-center justify-between text-slate-900 dark:text-white hover:bg-slate-400/80 dark:hover:bg-slate-700/80 transition-colors"
+                className={guideRowHeaderClass}
               >
                 <span className="flex items-center gap-2">
-                  <Info className="w-4 h-4 text-indigo-700 dark:text-indigo-400" />
+                  <Info className="w-4 h-4 text-sky-600 dark:text-sky-300" />
                   {t.guidePurposeTitle}
                 </span>
                 {openGuideSection === 'purpose' ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
               </button>
 
               {openGuideSection === 'purpose' && (
-                <div className="p-3.5 bg-slate-100 dark:bg-slate-900/90 text-xs space-y-2.5 text-slate-800 dark:text-slate-300 font-medium border-t border-slate-400/80 dark:border-slate-800">
+                <div className={guideRowBodyClass}>
                   <p className="leading-relaxed">
                     {language === 'id'
                       ? 'Aplikasi ini dibangun untuk menghadirkan alat kalkulasi & konversi satuan yang 100% bersih, cepat, aman, dan bebas dari iklan yang mengganggu.'
@@ -376,21 +373,24 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   </p>
                   <div className="space-y-1.5 pt-1">
                     <div className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
                       <div>
-                        <strong className="text-slate-900 dark:text-white font-extrabold">100% Bebas Iklan & Offline:</strong> {language === 'id' ? 'Bekerja secara lokal di browser tanpa membutuhkan koneksi internet atau server eksternal.' : 'Runs locally in browser without needing internet connections.'}
+                        <strong className="text-slate-900 dark:text-white font-extrabold">100% Bebas Iklan &amp; Offline:</strong>{' '}
+                        {language === 'id' ? 'Bekerja secara lokal di browser tanpa membutuhkan koneksi internet atau server eksternal.' : 'Runs locally in browser without needing internet connections.'}
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
                       <div>
-                        <strong className="text-slate-900 dark:text-white font-extrabold">Aman Tanpa eval():</strong> {language === 'id' ? 'Menggunakan mesin AST Parser matematika buatan sendiri untuk evaluasi ekspresi presisi tinggi.' : 'Uses a custom Shunting-Yard AST Parser for 100% secure calculation evaluation.'}
+                        <strong className="text-slate-900 dark:text-white font-extrabold">Aman Tanpa eval():</strong>{' '}
+                        {language === 'id' ? 'Menggunakan mesin AST Parser matematika buatan sendiri untuk evaluasi ekspresi presisi tinggi.' : 'Uses a custom Shunting-Yard AST Parser for 100% secure calculation evaluation.'}
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
                       <div>
-                        <strong className="text-slate-900 dark:text-white font-extrabold">Dua Mode Ergonomis:</strong> {language === 'id' ? 'Bebas berganti antara Mode Default (aritmatika harian) dan Mode Lengkap (fungsi ilmiah 4 kolom).' : 'Easily switch between Default Mode (everyday arithmetic) and Complete Mode (4-column scientific keypad).'}
+                        <strong className="text-slate-900 dark:text-white font-extrabold">Dua Mode Ergonomis:</strong>{' '}
+                        {language === 'id' ? 'Bebas berganti antara Mode Default (aritmatika harian) dan Mode Lengkap (fungsi ilmiah 4 kolom).' : 'Easily switch between Default Mode (everyday arithmetic) and Complete Mode (4-column scientific keypad).'}
                       </div>
                     </div>
                   </div>
@@ -399,31 +399,33 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </div>
 
             {/* Guide 2: Perbedaan Mode Default & Lengkap */}
-            <div className="rounded-2xl border border-slate-400/80 dark:border-slate-800 overflow-hidden">
+            <div className="rounded-2xl tempered-glass-surface overflow-hidden">
               <button
                 type="button"
                 onClick={() => toggleGuide('modes')}
-                className="w-full p-3.5 bg-slate-300/80 dark:bg-slate-800/80 text-left font-extrabold text-xs flex items-center justify-between text-slate-900 dark:text-white hover:bg-slate-400/80 dark:hover:bg-slate-700/80 transition-colors"
+                className={guideRowHeaderClass}
               >
                 <span className="flex items-center gap-2">
-                  <Calculator className="w-4 h-4 text-indigo-700 dark:text-indigo-400" />
+                  <Calculator className="w-4 h-4 text-sky-600 dark:text-sky-300" />
                   {t.guideModesTitle}
                 </span>
                 {openGuideSection === 'modes' ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
               </button>
 
               {openGuideSection === 'modes' && (
-                <div className="p-3.5 bg-slate-100 dark:bg-slate-900/90 text-xs space-y-2 text-slate-800 dark:text-slate-300 font-medium border-t border-slate-400/80 dark:border-slate-800">
+                <div className={guideRowBodyClass}>
                   <div className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-900 dark:text-white font-extrabold">Mode Default:</strong> {language === 'id' ? 'Didesain untuk aritmatika dasar sehari-hari dengan tombol angka besar yang sangat lega.' : 'Designed for everyday basic arithmetic with large, comfortable touch buttons.'}
+                      <strong className="text-slate-900 dark:text-white font-extrabold">Mode Default:</strong>{' '}
+                      {language === 'id' ? 'Didesain untuk aritmatika dasar sehari-hari dengan tombol angka besar yang sangat lega.' : 'Designed for everyday basic arithmetic with large, comfortable touch buttons.'}
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-900 dark:text-white font-extrabold">Mode Lengkap:</strong> {language === 'id' ? 'Tata letak 4-kolom ilmiah presisi dengan tombol hapus (AC, C, ⌫) di baris paling atas tepat di bawah layar hasil.' : 'Precision 4-column scientific layout with clear/delete buttons (AC, C, ⌫) at Row 1 directly below the result card.'}
+                      <strong className="text-slate-900 dark:text-white font-extrabold">Mode Lengkap:</strong>{' '}
+                      {language === 'id' ? 'Tata letak 4-kolom ilmiah presisi dengan tombol hapus (AC, C, ⌫) di baris paling atas tepat di bawah layar hasil.' : 'Precision 4-column scientific layout with clear/delete buttons (AC, C, ⌫) at Row 1 directly below the result card.'}
                     </div>
                   </div>
                 </div>
@@ -431,27 +433,27 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </div>
 
             {/* Guide 3: 2nd Button & Inverse Functions */}
-            <div className="rounded-2xl border border-slate-400/80 dark:border-slate-800 overflow-hidden">
+            <div className="rounded-2xl tempered-glass-surface overflow-hidden">
               <button
                 type="button"
                 onClick={() => toggleGuide('second')}
-                className="w-full p-3.5 bg-slate-300/80 dark:bg-slate-800/80 text-left font-extrabold text-xs flex items-center justify-between text-slate-900 dark:text-white hover:bg-slate-400/80 dark:hover:bg-slate-700/80 transition-colors"
+                className={guideRowHeaderClass}
               >
                 <span className="flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-violet-700 dark:text-violet-400" />
+                  <Zap className="w-4 h-4 text-amber-500 dark:text-amber-300" />
                   {t.guideSecondTitle}
                 </span>
                 {openGuideSection === 'second' ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
               </button>
 
               {openGuideSection === 'second' && (
-                <div className="p-3.5 bg-slate-100 dark:bg-slate-900/90 text-xs space-y-2 text-slate-800 dark:text-slate-300 font-medium border-t border-slate-400/80 dark:border-slate-800">
+                <div className={guideRowBodyClass}>
                   <p>
                     {language === 'id'
                       ? 'Tombol 2nd berwarna kuning mencolok. Saat ditekan aktif, fungsi matematika otomatis bertransformasi:'
                       : 'The yellow 2nd button toggles inverse mathematical functions:'}
                   </p>
-                  <ul className="list-disc pl-5 space-y-1 font-mono text-[11px] text-violet-700 dark:text-violet-300 font-bold">
+                  <ul className="list-disc pl-5 space-y-1 font-mono text-[11px] text-amber-700 dark:text-amber-300 font-bold">
                     <li>sin → sin⁻¹ (Arcsin)</li>
                     <li>cos → cos⁻¹ (Arccos)</li>
                     <li>tan → tan⁻¹ (Arctan)</li>
@@ -463,31 +465,33 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </div>
 
             {/* Guide 4: Calculation History & Actions */}
-            <div className="rounded-2xl border border-slate-400/80 dark:border-slate-800 overflow-hidden">
+            <div className="rounded-2xl tempered-glass-surface overflow-hidden">
               <button
                 type="button"
                 onClick={() => toggleGuide('history')}
-                className="w-full p-3.5 bg-slate-300/80 dark:bg-slate-800/80 text-left font-extrabold text-xs flex items-center justify-between text-slate-900 dark:text-white hover:bg-slate-400/80 dark:hover:bg-slate-700/80 transition-colors"
+                className={guideRowHeaderClass}
               >
                 <span className="flex items-center gap-2">
-                  <History className="w-4 h-4 text-indigo-700 dark:text-indigo-400" />
+                  <History className="w-4 h-4 text-sky-600 dark:text-sky-300" />
                   {t.guideHistoryTitle}
                 </span>
                 {openGuideSection === 'history' ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
               </button>
 
               {openGuideSection === 'history' && (
-                <div className="p-3.5 bg-slate-100 dark:bg-slate-900/90 text-xs space-y-2 text-slate-800 dark:text-slate-300 font-medium border-t border-slate-400/80 dark:border-slate-800">
+                <div className={guideRowBodyClass}>
                   <div className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-900 dark:text-white font-extrabold">{t.restoreFormula}:</strong> {language === 'id' ? 'Mengembalikan seluruh rumus lama ke layar kalkulator untuk dihitung atau diedit kembali.' : 'Restores the original formula string into the calculator display.'}
+                      <strong className="text-slate-900 dark:text-white font-extrabold">{t.restoreFormula}:</strong>{' '}
+                      {language === 'id' ? 'Mengembalikan seluruh rumus lama ke layar kalkulator untuk dihitung atau diedit kembali.' : 'Restores the original formula string into the calculator display.'}
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-900 dark:text-white font-extrabold">{t.insertResult}:</strong> {language === 'id' ? 'Menyisipkan angka hasil ke dalam rumus yang sedang diketik.' : 'Appends the calculated number into your ongoing expression.'}
+                      <strong className="text-slate-900 dark:text-white font-extrabold">{t.insertResult}:</strong>{' '}
+                      {language === 'id' ? 'Menyisipkan angka hasil ke dalam rumus yang sedang diketik.' : 'Appends the calculated number into your ongoing expression.'}
                     </div>
                   </div>
                 </div>
@@ -495,35 +499,35 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </div>
 
             {/* Guide 5: Unit Converter & Detailed 14 Category Breakdown */}
-            <div className="rounded-2xl border border-slate-400/80 dark:border-slate-800 overflow-hidden">
+            <div className="rounded-2xl tempered-glass-surface overflow-hidden">
               <button
                 type="button"
                 onClick={() => toggleGuide('converter')}
-                className="w-full p-3.5 bg-slate-300/80 dark:bg-slate-800/80 text-left font-extrabold text-xs flex items-center justify-between text-slate-900 dark:text-white hover:bg-slate-400/80 dark:hover:bg-slate-700/80 transition-colors"
+                className={guideRowHeaderClass}
               >
                 <span className="flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-indigo-700 dark:text-indigo-400" />
+                  <Layers className="w-4 h-4 text-sky-600 dark:text-sky-300" />
                   {t.guideConverterTitle}
                 </span>
                 {openGuideSection === 'converter' ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
               </button>
 
               {openGuideSection === 'converter' && (
-                <div className="p-3.5 bg-slate-100 dark:bg-slate-900/90 text-xs space-y-3 text-slate-800 dark:text-slate-300 font-medium border-t border-slate-400/80 dark:border-slate-800">
+                <div className={guideRowBodyClass}>
                   <div className="grid grid-cols-1 gap-2">
                     {categoriesDetail.map((cat, idx) => (
                       <div
                         key={cat.id}
-                        className="p-2.5 rounded-xl bg-slate-200/90 dark:bg-slate-800/60 border border-slate-400/70 dark:border-slate-700/60 flex items-start gap-2.5"
+                        className="p-2.5 rounded-xl bg-white/60 dark:bg-white/[0.04] border border-slate-900/10 dark:border-white/10 flex items-start gap-2.5"
                       >
-                        <div className="p-1.5 rounded-lg bg-white dark:bg-slate-900 shadow-sm shrink-0">
+                        <div className="p-1.5 rounded-lg bg-white dark:bg-[#0c1930] border border-slate-900/10 dark:border-white/12 shadow-sm shrink-0">
                           {cat.icon}
                         </div>
                         <div>
                           <div className="text-[11px] font-extrabold text-slate-900 dark:text-white">
                             {idx + 1}. {cat.name}
                           </div>
-                          <div className="text-[10px] text-slate-700 dark:text-slate-400 mt-0.5">
+                          <div className="text-[10px] text-slate-600 dark:text-slate-400 mt-0.5">
                             {cat.desc}
                           </div>
                         </div>
@@ -537,14 +541,15 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
 
         {/* SECTION 5: About & License Footer */}
-        <div className="pt-3 border-t border-slate-400/80 dark:border-slate-800 text-center text-xs font-medium text-slate-700 dark:text-slate-400 space-y-1">
+        <div className="pt-3 border-t border-slate-900/10 dark:border-white/12 text-center text-xs font-medium text-slate-600 dark:text-slate-400 space-y-1">
           <div className="font-extrabold text-slate-900 dark:text-white">
             {t.versionLabel}
           </div>
           <div>
-            Built with Next.js 14, TypeScript & Tailwind CSS by <strong className="text-indigo-700 dark:text-indigo-400 font-extrabold">Yaser Arafat</strong>.
+            Built with Next.js 14, TypeScript &amp; Tailwind CSS by{' '}
+            <strong className="text-sky-700 dark:text-sky-300 font-extrabold">Yaser Arafat</strong>.
           </div>
-          <div className="text-[10px] opacity-70">
+          <div className="text-[10px] opacity-75">
             Licensed under MIT &copy; 2026. Zero `eval()`, 100% Local-First.
           </div>
         </div>

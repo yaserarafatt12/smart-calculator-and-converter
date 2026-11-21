@@ -31,71 +31,73 @@ export const Header: React.FC<HeaderProps> = ({
   const t = TRANSLATIONS[language];
 
   return (
-    <div className="w-full flex items-center justify-between gap-1.5 sm:gap-3 pb-3 mb-2 border-b border-slate-200/80 dark:border-slate-800/80 select-none">
-      {/* Top Center: Clean Floating Tab Switcher */}
-      <div className="flex items-center gap-1">
+    <header className="w-full flex items-center justify-between gap-1.5 sm:gap-2.5 pb-3.5 mb-2 border-b border-slate-900/10 dark:border-white/10 select-none">
+      {/* iOS 26 Liquid Glass Segmented Tab Switcher */}
+      <nav
+        aria-label="Primary Navigation"
+        className="relative overflow-visible flex items-center gap-0.5 p-1 rounded-full liquid-glass-track"
+      >
         <button
           type="button"
           id="tab-calculator"
           onClick={() => onTabChange('calculator')}
-          className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 btn-press-effect ${
+          className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-[13px] font-extrabold tracking-tight transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] btn-press-effect ${
             activeTab === 'calculator'
-              ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/30 scale-[1.02]'
-              : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-transparent'
+              ? 'liquid-glass-lens text-white scale-[1.03]'
+              : 'text-slate-600 dark:text-slate-300/80 hover:text-slate-950 dark:hover:text-white bg-transparent'
           }`}
         >
-          <Calculator strokeWidth={2.5} className="w-4 h-4" />
+          <Calculator strokeWidth={2.4} className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           <span>{t.calculator}</span>
         </button>
         <button
           type="button"
           id="tab-converter"
           onClick={() => onTabChange('converter')}
-          className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 btn-press-effect ${
+          className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-[13px] font-extrabold tracking-tight transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] btn-press-effect ${
             activeTab === 'converter'
-              ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/30 scale-[1.02]'
-              : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-transparent'
+              ? 'liquid-glass-lens text-white scale-[1.03]'
+              : 'text-slate-600 dark:text-slate-300/80 hover:text-slate-950 dark:hover:text-white bg-transparent'
           }`}
         >
-          <ArrowLeftRight strokeWidth={2.5} className="w-4 h-4" />
+          <ArrowLeftRight strokeWidth={2.4} className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           <span>{t.converter}</span>
         </button>
-      </div>
+      </nav>
 
-      {/* Top Right: Language, History & Settings Gear Button */}
+      {/* Top Right: Liquid Glass Utility Pills (Language, History, Settings) */}
       <div className="flex items-center gap-1.5 shrink-0">
-        {/* Language Switcher Button */}
         <button
           type="button"
           onClick={onToggleLanguage}
-          className="flex items-center gap-1 px-2.5 py-1.5 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white border border-indigo-500/30 transition-all duration-200 btn-press-effect text-xs font-black"
+          className="flex items-center gap-1 px-2.5 py-1.5 rounded-full tempered-glass-surface text-sky-700 dark:text-sky-300 hover:border-sky-400/50 hover:text-sky-900 dark:hover:text-white transition-all duration-200 btn-press-effect text-[11px] font-black tracking-wide"
           title={language === 'en' ? 'Switch to Indonesian' : 'Switch to English'}
         >
-          <Globe strokeWidth={2.5} className="w-3.5 h-3.5" />
+          <Globe strokeWidth={2.4} className="w-3.5 h-3.5" />
           <span>{language.toUpperCase()}</span>
         </button>
 
-        {/* History Button */}
         <button
           type="button"
           onClick={onToggleHistory}
-          className="p-2 rounded-2xl bg-slate-200/80 dark:bg-slate-800/90 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 border border-slate-300/80 dark:border-slate-700/80 transition-all duration-200 btn-press-effect"
+          className="p-2 rounded-full tempered-glass-surface text-slate-700 dark:text-sky-200 hover:border-sky-400/50 hover:text-sky-600 dark:hover:text-white transition-all duration-200 btn-press-effect"
           title={t.history}
+          aria-label={t.history}
         >
-          <History strokeWidth={2.5} className="w-4 h-4" />
+          <History strokeWidth={2.4} className="w-4 h-4" />
         </button>
 
-        {/* Settings & Guidebook Gear Button */}
         <button
           type="button"
           onClick={onOpenSettings}
-          className="p-2 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white border border-indigo-500/30 transition-all duration-200 btn-press-effect"
+          className="p-2 rounded-full tempered-glass-surface text-slate-700 dark:text-sky-200 hover:border-sky-400/50 hover:text-sky-600 dark:hover:text-white transition-all duration-200 btn-press-effect"
           title={t.settings}
+          aria-label={t.settings}
         >
-          <Settings strokeWidth={2.5} className="w-4 h-4" />
+          <Settings strokeWidth={2.4} className="w-4 h-4" />
         </button>
       </div>
-    </div>
+    </header>
   );
 };
 

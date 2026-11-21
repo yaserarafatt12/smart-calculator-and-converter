@@ -60,20 +60,20 @@ export const Keypad: React.FC<KeypadProps> = ({
   const getKeyStyle = (type: KeyConfig['type']) => {
     switch (type) {
       case 'number':
-        return 'bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 font-extrabold shadow-sm border border-slate-200/80 dark:border-slate-700/60';
+        return 'glass-key-num text-slate-900 dark:text-white font-extrabold tabular-nums';
       case 'operator':
-        return 'bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold shadow-lg shadow-indigo-600/30 border border-indigo-400/30';
+        return 'glass-key-op text-white font-extrabold';
       case 'equals':
-        return 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-extrabold shadow-lg shadow-indigo-500/40 border border-indigo-400/40';
+        return 'glass-key-eq text-white font-extrabold';
       case 'action':
-        return 'bg-rose-500/10 dark:bg-rose-500/20 hover:bg-rose-500/20 dark:hover:bg-rose-500/30 text-rose-600 dark:text-rose-400 font-extrabold border border-rose-500/20';
+        return 'glass-key-action text-rose-600 dark:text-rose-300 font-extrabold';
     }
   };
 
   return (
-    <div id="calculator-keypad" className="w-full mt-auto pt-1">
+    <div id="calculator-keypad" className="w-full mt-auto pt-1.5">
       {/* Keypad Grid: Smooth Spring Transition when morphing button height */}
-      <div className={`grid grid-cols-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isComplete ? 'gap-1.5 sm:gap-2' : 'gap-3 sm:gap-3.5'}`}>
+      <div className={`grid grid-cols-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isComplete ? 'gap-1.5 sm:gap-2' : 'gap-2.5 sm:gap-3'}`}>
         {keys.map((key, idx) => (
           <button
             key={`${key.value}-${idx}`}
@@ -88,8 +88,8 @@ export const Keypad: React.FC<KeypadProps> = ({
               }
             }}
             className={`relative ${
-              isComplete ? 'h-11 sm:h-12 text-lg sm:text-xl' : 'h-14 sm:h-16 text-2xl sm:text-3xl'
-            } rounded-2xl font-extrabold transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] btn-press-effect flex items-center justify-center select-none ${
+              isComplete ? 'h-11 sm:h-12 text-lg sm:text-xl' : 'h-14 sm:h-[60px] text-2xl sm:text-[26px]'
+            } rounded-2xl font-extrabold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] btn-press-effect flex items-center justify-center select-none ${
               key.colSpan || ''
             } ${getKeyStyle(key.type)}`}
           >

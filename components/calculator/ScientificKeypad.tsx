@@ -26,43 +26,43 @@ export const ScientificKeypad: React.FC<ScientificKeypadProps> = ({
 }) => {
   const [isSecondMode, setIsSecondMode] = useState(false);
 
+  const actionKeyClass =
+    'h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold glass-key-action text-rose-600 dark:text-rose-300 transition-all btn-press-effect flex items-center justify-center select-none';
+  const fnKeyClass =
+    'h-11 sm:h-12 rounded-2xl text-sm sm:text-base font-bold glass-key-fn text-slate-800 dark:text-slate-100 transition-all btn-press-effect flex items-center justify-center select-none';
+  const trigKeyClass = isSecondMode
+    ? 'h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-black bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] transition-all btn-press-effect flex items-center justify-center select-none'
+    : 'h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold glass-key-fn text-sky-700 dark:text-sky-300 hover:text-sky-900 dark:hover:text-white transition-all btn-press-effect flex items-center justify-center select-none';
+  const numKeyClass =
+    'h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold tabular-nums glass-key-num text-slate-900 dark:text-white transition-all btn-press-effect flex items-center justify-center select-none';
+  const opKeyClass =
+    'h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold glass-key-op text-white transition-all btn-press-effect flex items-center justify-center select-none';
+
   return (
-    <div className="w-full">
+    <div className="w-full pt-1">
       {/* 4 Columns Grid with Standard Scientific Calculator Hierarchy */}
       <div className="grid grid-cols-4 gap-1.5 font-sans">
         {/* ROW 1: Clear & Erase Actions + 2nd Mode (AT THE TOP) */}
-        <button
-          type="button"
-          onClick={() => onKeyPress('AC')}
-          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 dark:hover:bg-rose-500/30 border border-rose-500/20 transition-all btn-press-effect flex items-center justify-center shadow-sm"
-        >
+        <button type="button" onClick={() => onKeyPress('AC')} className={actionKeyClass}>
           AC
         </button>
 
-        <button
-          type="button"
-          onClick={() => onKeyPress('C')}
-          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 dark:hover:bg-rose-500/30 border border-rose-500/20 transition-all btn-press-effect flex items-center justify-center shadow-sm"
-        >
+        <button type="button" onClick={() => onKeyPress('C')} className={actionKeyClass}>
           C
         </button>
 
-        <button
-          type="button"
-          onClick={() => onKeyPress('BACKSPACE')}
-          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 dark:hover:bg-rose-500/30 border border-rose-500/20 transition-all btn-press-effect flex items-center justify-center shadow-sm"
-        >
+        <button type="button" onClick={() => onKeyPress('BACKSPACE')} className={actionKeyClass}>
           <Delete className="w-5 h-5 mx-auto" />
         </button>
 
-        {/* 2nd Button with Distinct Yellow/Amber Tint from the Start */}
+        {/* 2nd Button with Luminous Amber Glass */}
         <button
           type="button"
           onClick={() => setIsSecondMode(!isSecondMode)}
-          className={`h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold transition-all btn-press-effect flex items-center justify-center gap-1.5 border shadow-sm ${
+          className={`h-11 sm:h-12 rounded-2xl text-xs sm:text-sm transition-all btn-press-effect flex items-center justify-center gap-1.5 border select-none ${
             isSecondMode
-              ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-lg shadow-amber-500/40 font-black scale-[1.03]'
-              : 'bg-amber-500/15 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 hover:bg-amber-500/30 border-amber-500/40 font-extrabold'
+              ? 'bg-gradient-to-b from-amber-400 to-amber-500 text-slate-950 border-amber-200/80 shadow-[0_8px_20px_-4px_rgba(245,158,11,0.5),inset_0_1.5px_1px_rgba(255,255,255,0.6)] font-black scale-[1.03]'
+              : 'bg-amber-500/15 dark:bg-amber-500/18 text-amber-700 dark:text-amber-300 hover:bg-amber-500/25 border-amber-400/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] font-extrabold'
           }`}
           title={isSecondMode ? 'Mode 2nd Aktif (Fungsi Invers)' : 'Aktifkan Mode 2nd'}
         >
@@ -74,7 +74,7 @@ export const ScientificKeypad: React.FC<ScientificKeypadProps> = ({
         <button
           type="button"
           onClick={onToggleAngleMode}
-          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-500/30 transition-all btn-press-effect border border-indigo-500/40 flex items-center justify-center shadow-sm"
+          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold bg-sky-500/15 dark:bg-sky-500/20 text-sky-700 dark:text-sky-300 hover:bg-sky-500/25 transition-all btn-press-effect border border-sky-400/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] flex items-center justify-center select-none"
         >
           {angleMode === 'degree' ? 'DEG' : 'RAD'}
         </button>
@@ -82,7 +82,7 @@ export const ScientificKeypad: React.FC<ScientificKeypadProps> = ({
         <button
           type="button"
           onClick={onMemoryClear}
-          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold bg-slate-200/90 dark:bg-slate-800/90 text-rose-600 dark:text-rose-400 hover:bg-rose-600 hover:text-white transition-all btn-press-effect border border-slate-300/80 dark:border-slate-700/60 flex items-center justify-center shadow-sm"
+          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold glass-key-fn text-rose-600 dark:text-rose-300 hover:border-rose-400/45 transition-all btn-press-effect flex items-center justify-center select-none"
           title="Memory Clear"
         >
           MC
@@ -91,7 +91,7 @@ export const ScientificKeypad: React.FC<ScientificKeypadProps> = ({
         <button
           type="button"
           onClick={onMemoryRecall}
-          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold bg-slate-200/90 dark:bg-slate-800/90 text-amber-600 dark:text-amber-400 hover:bg-amber-600 hover:text-white transition-all btn-press-effect border border-slate-300/80 dark:border-slate-700/60 flex items-center justify-center shadow-sm"
+          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold glass-key-fn text-amber-600 dark:text-amber-300 hover:border-amber-400/45 transition-all btn-press-effect flex items-center justify-center select-none"
           title="Memory Recall"
         >
           MR
@@ -100,34 +100,22 @@ export const ScientificKeypad: React.FC<ScientificKeypadProps> = ({
         <button
           type="button"
           onClick={onInsertAns}
-          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold bg-indigo-600 text-white hover:bg-indigo-700 transition-all btn-press-effect shadow-md shadow-indigo-600/30 flex items-center justify-center border border-indigo-400/40"
+          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold glass-key-op text-white transition-all btn-press-effect flex items-center justify-center select-none"
           title="Hasil Perhitungan Terakhir"
         >
           Ans
         </button>
 
         {/* ROW 3: Parentheses, Percent & Root / Power */}
-        <button
-          type="button"
-          onClick={() => onKeyPress('(')}
-          className="h-11 sm:h-12 rounded-2xl text-sm sm:text-base font-bold bg-slate-200/90 dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center shadow-sm"
-        >
+        <button type="button" onClick={() => onKeyPress('(')} className={fnKeyClass}>
           (
         </button>
 
-        <button
-          type="button"
-          onClick={() => onKeyPress(')')}
-          className="h-11 sm:h-12 rounded-2xl text-sm sm:text-base font-bold bg-slate-200/90 dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center shadow-sm"
-        >
+        <button type="button" onClick={() => onKeyPress(')')} className={fnKeyClass}>
           )
         </button>
 
-        <button
-          type="button"
-          onClick={() => onKeyPress('%')}
-          className="h-11 sm:h-12 rounded-2xl text-sm sm:text-base font-bold bg-slate-200/90 dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center shadow-sm"
-        >
+        <button type="button" onClick={() => onKeyPress('%')} className={fnKeyClass}>
           %
         </button>
 
@@ -135,219 +123,80 @@ export const ScientificKeypad: React.FC<ScientificKeypadProps> = ({
         <button
           type="button"
           onClick={() => onKeyPress(isSecondMode ? '^2' : '√(')}
-          className={`h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold transition-all btn-press-effect flex items-center justify-center shadow-sm ${
+          className={
             isSecondMode
-              ? 'bg-amber-500/25 text-amber-600 dark:text-amber-300 border border-amber-500/50 font-black'
-              : 'bg-slate-200/90 dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/80 dark:border-slate-700/60'
-          }`}
+              ? 'h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-black bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] transition-all btn-press-effect flex items-center justify-center select-none'
+              : 'h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold glass-key-fn text-slate-800 dark:text-slate-100 transition-all btn-press-effect flex items-center justify-center select-none'
+          }
         >
           {isSecondMode ? 'x²' : '√x'}
         </button>
 
         {/* ROW 4: Trigonometry & Logarithm (Transforms on 2nd) */}
-        <button
-          type="button"
-          onClick={() => onKeyPress(isSecondMode ? 'asin(' : 'sin(')}
-          className={`h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold transition-all btn-press-effect border flex items-center justify-center shadow-sm ${
-            isSecondMode
-              ? 'bg-amber-500/25 text-amber-600 dark:text-amber-300 border-amber-500/50 font-black'
-              : 'bg-slate-200/90 dark:bg-slate-800/90 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white border-slate-300/80 dark:border-slate-700/60'
-          }`}
-        >
+        <button type="button" onClick={() => onKeyPress(isSecondMode ? 'asin(' : 'sin(')} className={trigKeyClass}>
           {isSecondMode ? 'sin⁻¹' : 'sin'}
         </button>
 
-        <button
-          type="button"
-          onClick={() => onKeyPress(isSecondMode ? 'acos(' : 'cos(')}
-          className={`h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold transition-all btn-press-effect border flex items-center justify-center shadow-sm ${
-            isSecondMode
-              ? 'bg-amber-500/25 text-amber-600 dark:text-amber-300 border-amber-500/50 font-black'
-              : 'bg-slate-200/90 dark:bg-slate-800/90 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white border-slate-300/80 dark:border-slate-700/60'
-          }`}
-        >
+        <button type="button" onClick={() => onKeyPress(isSecondMode ? 'acos(' : 'cos(')} className={trigKeyClass}>
           {isSecondMode ? 'cos⁻¹' : 'cos'}
         </button>
 
-        <button
-          type="button"
-          onClick={() => onKeyPress(isSecondMode ? 'atan(' : 'tan(')}
-          className={`h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold transition-all btn-press-effect border flex items-center justify-center shadow-sm ${
-            isSecondMode
-              ? 'bg-amber-500/25 text-amber-600 dark:text-amber-300 border-amber-500/50 font-black'
-              : 'bg-slate-200/90 dark:bg-slate-800/90 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white border-slate-300/80 dark:border-slate-700/60'
-          }`}
-        >
+        <button type="button" onClick={() => onKeyPress(isSecondMode ? 'atan(' : 'tan(')} className={trigKeyClass}>
           {isSecondMode ? 'tan⁻¹' : 'tan'}
         </button>
 
         {/* log transforms to 10ˣ when 2nd active */}
-        <button
-          type="button"
-          onClick={() => onKeyPress(isSecondMode ? '10^(' : 'log(')}
-          className={`h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold transition-all btn-press-effect border flex items-center justify-center shadow-sm ${
-            isSecondMode
-              ? 'bg-amber-500/25 text-amber-600 dark:text-amber-300 border-amber-500/50 font-black'
-              : 'bg-slate-200/90 dark:bg-slate-800/90 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white border-slate-300/80 dark:border-slate-700/60'
-          }`}
-        >
+        <button type="button" onClick={() => onKeyPress(isSecondMode ? '10^(' : 'log(')} className={trigKeyClass}>
           {isSecondMode ? '10ˣ' : 'log'}
         </button>
 
         {/* ROW 5: Ln, Constants & Exponent (Transforms on 2nd) */}
-        {/* ln transforms to eˣ when 2nd active */}
-        <button
-          type="button"
-          onClick={() => onKeyPress(isSecondMode ? 'e^(' : 'ln(')}
-          className={`h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold transition-all btn-press-effect border flex items-center justify-center shadow-sm ${
-            isSecondMode
-              ? 'bg-amber-500/25 text-amber-600 dark:text-amber-300 border-amber-500/50 font-black'
-              : 'bg-slate-200/90 dark:bg-slate-800/90 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white border-slate-300/80 dark:border-slate-700/60'
-          }`}
-        >
+        <button type="button" onClick={() => onKeyPress(isSecondMode ? 'e^(' : 'ln(')} className={trigKeyClass}>
           {isSecondMode ? 'eˣ' : 'ln'}
         </button>
 
-        <button
-          type="button"
-          onClick={() => onKeyPress('π')}
-          className="h-11 sm:h-12 rounded-2xl text-sm sm:text-base font-extrabold bg-slate-200/90 dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center shadow-sm"
-        >
+        <button type="button" onClick={() => onKeyPress('π')} className={fnKeyClass}>
           π
         </button>
 
-        <button
-          type="button"
-          onClick={() => onKeyPress('e')}
-          className="h-11 sm:h-12 rounded-2xl text-sm sm:text-base font-extrabold bg-slate-200/90 dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center shadow-sm"
-        >
+        <button type="button" onClick={() => onKeyPress('e')} className={fnKeyClass}>
           e
         </button>
 
         <button
           type="button"
           onClick={() => onKeyPress('^')}
-          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold bg-slate-200/90 dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center shadow-sm"
+          className="h-11 sm:h-12 rounded-2xl text-xs sm:text-sm font-extrabold glass-key-fn text-slate-800 dark:text-slate-100 transition-all btn-press-effect flex items-center justify-center select-none"
         >
           xʸ
         </button>
 
         {/* ROW 6: Numbers 7, 8, 9 & Divide */}
-        <button
-          type="button"
-          onClick={() => onKeyPress('7')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          7
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('8')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          8
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('9')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          9
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('/')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          ÷
-        </button>
+        <button type="button" onClick={() => onKeyPress('7')} className={numKeyClass}>7</button>
+        <button type="button" onClick={() => onKeyPress('8')} className={numKeyClass}>8</button>
+        <button type="button" onClick={() => onKeyPress('9')} className={numKeyClass}>9</button>
+        <button type="button" onClick={() => onKeyPress('/')} className={opKeyClass}>÷</button>
 
         {/* ROW 7: Numbers 4, 5, 6 & Multiply */}
-        <button
-          type="button"
-          onClick={() => onKeyPress('4')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          4
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('5')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          5
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('6')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          6
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('*')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          ×
-        </button>
+        <button type="button" onClick={() => onKeyPress('4')} className={numKeyClass}>4</button>
+        <button type="button" onClick={() => onKeyPress('5')} className={numKeyClass}>5</button>
+        <button type="button" onClick={() => onKeyPress('6')} className={numKeyClass}>6</button>
+        <button type="button" onClick={() => onKeyPress('*')} className={opKeyClass}>×</button>
 
         {/* ROW 8: Numbers 1, 2, 3 & Subtract */}
-        <button
-          type="button"
-          onClick={() => onKeyPress('1')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          1
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('2')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          2
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('3')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          3
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('-')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          -
-        </button>
+        <button type="button" onClick={() => onKeyPress('1')} className={numKeyClass}>1</button>
+        <button type="button" onClick={() => onKeyPress('2')} className={numKeyClass}>2</button>
+        <button type="button" onClick={() => onKeyPress('3')} className={numKeyClass}>3</button>
+        <button type="button" onClick={() => onKeyPress('-')} className={opKeyClass}>-</button>
 
         {/* ROW 9: Number 0, Dot, Add & Equals */}
-        <button
-          type="button"
-          onClick={() => onKeyPress('0')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          0
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('.')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm border border-slate-200/80 dark:border-slate-700/60 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          .
-        </button>
-        <button
-          type="button"
-          onClick={() => onKeyPress('+')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all btn-press-effect flex items-center justify-center select-none"
-        >
-          +
-        </button>
+        <button type="button" onClick={() => onKeyPress('0')} className={numKeyClass}>0</button>
+        <button type="button" onClick={() => onKeyPress('.')} className={numKeyClass}>.</button>
+        <button type="button" onClick={() => onKeyPress('+')} className={opKeyClass}>+</button>
         <button
           type="button"
           onClick={() => onKeyPress('=')}
-          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white shadow-lg shadow-indigo-500/40 border border-indigo-400/40 transition-all btn-press-effect flex items-center justify-center select-none"
+          className="h-11 sm:h-12 rounded-2xl text-lg sm:text-xl font-extrabold glass-key-eq text-white transition-all btn-press-effect flex items-center justify-center select-none"
         >
           =
         </button>

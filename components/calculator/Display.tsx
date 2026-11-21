@@ -27,7 +27,7 @@ export const Display: React.FC<DisplayProps> = ({
   const renderExpressionWithHighlight = () => {
     if (!expression) {
       return (
-        <span className="text-slate-400 dark:text-slate-500 italic select-none">
+        <span className="text-slate-400/80 dark:text-slate-400/50 italic select-none">
           0
         </span>
       );
@@ -45,7 +45,7 @@ export const Display: React.FC<DisplayProps> = ({
           {before}
           <span
             data-testid="error-highlight"
-            className="inline-block bg-rose-500/20 text-rose-600 dark:text-rose-400 font-bold px-1.5 py-0.5 rounded-md ring-2 ring-rose-500 animate-pulse"
+            className="inline-block bg-rose-500/20 text-rose-600 dark:text-rose-300 font-bold px-1.5 py-0.5 rounded-lg ring-1 ring-rose-400/70 animate-pulse"
             title={`Error on index ${errorIndex}: '${errChar}'`}
           >
             {errChar}
@@ -61,12 +61,12 @@ export const Display: React.FC<DisplayProps> = ({
   return (
     <div
       id="calculator-display-container"
-      className="w-full pt-1 pb-1 px-1 flex flex-col text-right relative overflow-hidden"
+      className="w-full pt-2 pb-1 px-1.5 flex flex-col text-right relative overflow-hidden"
     >
       {/* Error alert indicator */}
       {isError && (
-        <div className="flex items-center justify-start text-xs mb-1">
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-600 dark:bg-rose-950/80 dark:text-rose-400 border border-rose-500/20">
+        <div className="flex items-center justify-start text-xs mb-1.5 animate-fade-in">
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-600 dark:bg-rose-500/20 dark:text-rose-300 border border-rose-400/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]">
             <AlertCircle strokeWidth={2.5} className="w-3 h-3" /> Syntax Error
           </span>
         </div>
@@ -76,10 +76,10 @@ export const Display: React.FC<DisplayProps> = ({
       <div
         id="calculator-expression"
         data-testid="calculator-expression"
-        className="text-right text-slate-400 dark:text-slate-400 font-sans text-xl sm:text-2xl font-bold tracking-wide overflow-x-auto py-2 scrollbar-none"
+        className="text-right text-slate-600 dark:text-slate-300/90 font-sans tabular-nums text-xl sm:text-2xl font-bold tracking-wide overflow-x-auto py-2.5 scrollbar-none min-h-[3.25rem]"
       >
         {renderExpressionWithHighlight()}
-        <span className="inline-block w-0.5 h-6 bg-indigo-500 ml-1 animate-cursor align-middle" />
+        <span className="inline-block w-[2px] h-6 bg-sky-500 dark:bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.75)] ml-1 rounded-full animate-cursor align-middle" />
       </div>
     </div>
   );
@@ -143,34 +143,34 @@ export const ResultCard: React.FC<ResultCardProps> = ({
       id="calculator-result"
       data-testid="calculator-result"
       onClick={onClickDetail}
-      className="w-full p-3 sm:p-3.5 rounded-2xl bg-slate-100/90 dark:bg-slate-900/90 border-2 border-indigo-500/30 dark:border-indigo-500/40 backdrop-blur-xl flex items-center justify-between gap-3 shadow-md cursor-pointer hover:border-indigo-500/60 transition-colors"
+      className="w-full p-3.5 sm:p-4 rounded-2xl tempered-glass-card flex items-center justify-between gap-3 cursor-pointer hover:border-sky-400/55 transition-all duration-200"
     >
-      {/* Left: Formatted Result Value in Sans-Serif */}
+      {/* Left: Formatted Result Value */}
       <div className="flex-1 min-w-0 text-left">
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 block mb-0.5">
+        <span className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300/90 block mb-0.5">
           {resultLabelText}
         </span>
-        <div className="text-2xl sm:text-3xl font-sans font-extrabold text-slate-900 dark:text-white truncate">
+        <div className="text-2xl sm:text-3xl font-sans tabular-nums font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
           {formatDisplayResult(result)}
         </div>
       </div>
 
-      {/* Far Right: Copy Button */}
+      {/* Far Right: Liquid Glass Copy Pill */}
       {result !== null && !isError && (
         <button
           type="button"
           onClick={handleCopyResult}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold shrink-0 transition-all btn-press-effect shadow-sm"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-full liquid-glass-lens text-white text-xs font-extrabold shrink-0 transition-all btn-press-effect"
           title={copyTooltipText}
         >
           {copied ? (
             <>
-              <Check strokeWidth={2.5} className="w-4 h-4 text-emerald-300" />
+              <Check strokeWidth={2.5} className="w-3.5 h-3.5 text-emerald-200" />
               <span>{copiedBtnText}</span>
             </>
           ) : (
             <>
-              <Copy strokeWidth={2.5} className="w-4 h-4" />
+              <Copy strokeWidth={2.5} className="w-3.5 h-3.5" />
               <span>{copyBtnText}</span>
             </>
           )}
