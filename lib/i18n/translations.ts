@@ -173,7 +173,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
 
     pwaInstallTitle: 'Install App on Phone (iOS & Android)',
     pwaInstalledText: 'App is installed on your device',
-    pwaInstallDesc: 'Add to home screen & work 100% offline',
+    pwaInstallDesc: 'Add to home screen for instant offline access',
     installBtn: 'Install',
     guidePurposeTitle: '1. About Smart Calc',
     guideModesTitle: '2. Basic vs Scientific Mode',

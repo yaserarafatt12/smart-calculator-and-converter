@@ -17,7 +17,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ theme, onToggle }) => 
       type="button"
       aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
       title={isDark ? 'Light Mode' : 'Dark Mode'}
-      className="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.18] text-xs font-semibold transition-all duration-200 btn-press-effect text-[#0A1128]/80 dark:text-white/85 hover:text-[#0A1128] dark:hover:text-white"
+      className="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/75 dark:bg-white/[0.08] border border-[#0A1128]/10 dark:border-white/[0.18] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_8px_rgba(10,17,40,0.06)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-md text-xs font-semibold transition-all duration-200 btn-press-effect text-[#0A1128]/85 dark:text-white/90 hover:bg-white dark:hover:bg-white/[0.14] hover:text-[#0A1128] dark:hover:text-white"
     >
       <div className="relative w-4 h-4 flex items-center justify-center">
         {isDark ? (

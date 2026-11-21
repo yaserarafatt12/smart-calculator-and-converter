@@ -88,7 +88,7 @@ export const PwaInstallPrompt: React.FC<PwaInstallPromptProps> = ({ language = '
               <div className="text-[11px] text-[#0A1128]/60 dark:text-white/55 font-medium mt-0.5 truncate">
                 {isIOS
                   ? (language === 'id' ? 'Tambahkan lewat Safari' : 'Add to iPhone Home Screen')
-                  : (language === 'id' ? 'Bisa digunakan 100% offline' : 'Works 100% offline')}
+                  : (language === 'id' ? 'Akses cepat tanpa koneksi' : 'Instant offline access')}
               </div>
             </div>
           </div>

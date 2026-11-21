@@ -35,6 +35,7 @@ import {
   Settings,
 } from 'lucide-react';
 import { Language, TRANSLATIONS } from '@/lib/i18n/translations';
+import { LiquidGlassSegmented } from '@/components/ui/LiquidGlassSegmented';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -220,7 +221,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-full bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.18] text-[#0A1128]/70 hover:text-[#0A1128] dark:text-white/75 dark:hover:text-white transition-colors btn-press-effect"
+            className="p-2 rounded-full bg-white/75 dark:bg-white/[0.08] border border-[#0A1128]/10 dark:border-white/[0.18] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] text-[#0A1128]/75 hover:text-[#0A1128] dark:text-white/90 dark:hover:text-white backdrop-blur-md transition-colors btn-press-effect"
             aria-label={t.close}
           >
             <X strokeWidth={2} className="w-4 h-4" />
@@ -295,48 +296,75 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </span>
         </div>
 
-        {/* SECTION 3: Appearance & Language Controls */}
-        <div className="space-y-2.5">
+        {/* SECTION 3: Appearance & Language Controls — iOS 26 Liquid Glass Segmented Lenses */}
+        <div className="space-y-2.5 overflow-visible">
           <h3 className="text-[11px] font-medium uppercase tracking-wider text-[#0A1128]/50 dark:text-white/55 px-0.5">
             {t.appSettingsGroup}
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {/* Theme Toggle */}
-            <div className="p-3.5 rounded-2xl tempered-glass-surface flex items-center justify-between">
-              <div className="flex items-center gap-2">
+          <div className="space-y-2.5 overflow-visible">
+            {/* Theme Segmented Control */}
+            <div className="p-3.5 rounded-2xl tempered-glass-surface flex items-center justify-between gap-3 overflow-visible">
+              <div className="flex items-center gap-2 min-w-0">
                 {isDark ? (
-                  <Moon strokeWidth={2} className="w-4 h-4 text-[#0A1128]/75 dark:text-white/80" />
+                  <Moon strokeWidth={2} className="w-4 h-4 text-[#0A1128]/75 dark:text-white/80 shrink-0" />
                 ) : (
-                  <Sun strokeWidth={2} className="w-4 h-4 text-[#0A1128]/75 dark:text-white/80" />
+                  <Sun strokeWidth={2} className="w-4 h-4 text-[#0A1128]/75 dark:text-white/80 shrink-0" />
                 )}
-                <span className="text-xs font-semibold text-[#0A1128] dark:text-white">{t.appearance}</span>
+                <span className="text-xs font-semibold text-[#0A1128] dark:text-white truncate">{t.appearance}</span>
               </div>
 
-              <button
-                type="button"
-                aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-                onClick={onToggleTheme}
-                className="px-3 py-1.5 rounded-full text-xs font-semibold primary-cta-btn transition-all btn-press-effect"
-              >
-                {isDark ? t.darkMode : t.lightMode}
-              </button>
+              <LiquidGlassSegmented<'light' | 'dark'>
+                value={theme}
+                onChange={(next) => {
+                  if (next !== theme) onToggleTheme();
+                }}
+                theme={theme}
+                size="sm"
+                ariaLabel={t.appearance}
+                className="w-[164px] shrink-0"
+                options={[
+                  {
+                    value: 'light',
+                    label: language === 'id' ? 'Terang' : 'Light',
+                    icon: <Sun strokeWidth={2} className="w-3.5 h-3.5" />,
+                  },
+                  {
+                    value: 'dark',
+                    label: language === 'id' ? 'Gelap' : 'Dark',
+                    icon: <Moon strokeWidth={2} className="w-3.5 h-3.5" />,
+                  },
+                ]}
+              />
             </div>
 
-            {/* Language Toggle */}
-            <div className="p-3.5 rounded-2xl tempered-glass-surface flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Globe strokeWidth={2} className="w-4 h-4 text-[#0A1128]/75 dark:text-white/80" />
-                <span className="text-xs font-semibold text-[#0A1128] dark:text-white">{t.languageLabel}</span>
+            {/* Language Segmented Control */}
+            <div className="p-3.5 rounded-2xl tempered-glass-surface flex items-center justify-between gap-3 overflow-visible">
+              <div className="flex items-center gap-2 min-w-0">
+                <Globe strokeWidth={2} className="w-4 h-4 text-[#0A1128]/75 dark:text-white/80 shrink-0" />
+                <span className="text-xs font-semibold text-[#0A1128] dark:text-white truncate">{t.languageLabel}</span>
               </div>
 
-              <button
-                type="button"
-                onClick={onToggleLanguage}
-                className="px-3 py-1.5 rounded-full text-xs font-semibold primary-cta-btn transition-all btn-press-effect"
-              >
-                {language === 'en' ? 'English' : 'Indonesia'}
-              </button>
+              <LiquidGlassSegmented<Language>
+                value={language}
+                onChange={(next) => {
+                  if (next !== language) onToggleLanguage();
+                }}
+                theme={theme}
+                size="sm"
+                ariaLabel={t.languageLabel}
+                className="w-[164px] shrink-0"
+                options={[
+                  {
+                    value: 'en',
+                    label: 'English',
+                  },
+                  {
+                    value: 'id',
+                    label: 'Indonesia',
+                  },
+                ]}
+              />
             </div>
           </div>
         </div>
@@ -377,9 +405,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <CheckCircle2 strokeWidth={2} className="w-4 h-4 text-[#00A3FF] dark:text-[#38BDF8] shrink-0 mt-0.5" />
                       <div>
                         <strong className="text-[#0A1128] dark:text-white font-semibold">
-                          {language === 'id' ? '100% Offline & Bebas Iklan:' : '100% Offline & Ad-Free:'}
+                          {language === 'id' ? 'Siap Offline:' : 'Offline Ready:'}
                         </strong>{' '}
-                        {language === 'id' ? 'Berjalan sepenuhnya lokal di perangkat tanpa koneksi internet.' : 'Runs completely locally on your device with no internet required.'}
+                        {language === 'id' ? 'Berjalan langsung di perangkat tanpa koneksi internet.' : 'Works directly on your device without an internet connection.'}
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
@@ -548,7 +576,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <strong className="text-[#0A1128] dark:text-white font-semibold">Yaser Arafat</strong>.
           </div>
           <div className="text-[10px] opacity-75">
-            Licensed under MIT &copy; 2026 &middot; 100% Local-First
+            MIT License &copy; 2026
           </div>
         </div>
       </div>

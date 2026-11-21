@@ -11,6 +11,7 @@ import ScientificKeypad from '@/components/calculator/ScientificKeypad';
 import ResultDetailModal from '@/components/calculator/ResultDetailModal';
 import SettingsModal from '@/components/settings/SettingsModal';
 import PwaInstallPrompt from '@/components/ui/PwaInstallPrompt';
+import { LiquidGlassSegmented } from '@/components/ui/LiquidGlassSegmented';
 
 import { ApplicationMode, AngleMode, CalculationResult } from '@/lib/calculator/types';
 import { evaluateExpression } from '@/lib/calculator/math-parser';
@@ -309,42 +310,28 @@ export default function Home() {
                 onDismiss={() => setFormattedError(null)}
               />
 
-              {/* Mode Switcher Pill: iOS 26 Liquid Glass Sliding Segmented Control */}
-              <div className="flex items-center justify-between gap-2">
-                <div className="relative overflow-visible grid grid-cols-2 liquid-glass-pill p-1 rounded-full min-w-[196px]">
-                  {/* Sliding Refractive Glass Lens */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full liquid-glass-lens-active"
-                    style={{
-                      transform: appMode === 'complete' ? 'translateX(100%)' : 'translateX(0%)',
-                    }}
-                  />
-                  <button
-                    type="button"
-                    id="mode-pill-default"
-                    onClick={() => handleModeChange('default')}
-                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-colors duration-200 ${
-                      appMode === 'default'
-                        ? 'text-[#0A1128] dark:text-white'
-                        : 'text-[#0A1128]/55 dark:text-white/55 hover:text-[#0A1128]/85 dark:hover:text-white/85'
-                    }`}
-                  >
-                    {t.defaultMode}
-                  </button>
-                  <button
-                    type="button"
-                    id="mode-pill-complete"
-                    onClick={() => handleModeChange('complete')}
-                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-colors duration-200 ${
-                      appMode === 'complete'
-                        ? 'text-[#0A1128] dark:text-white'
-                        : 'text-[#0A1128]/55 dark:text-white/55 hover:text-[#0A1128]/85 dark:hover:text-white/85'
-                    }`}
-                  >
-                    {t.completeMode}
-                  </button>
-                </div>
+              {/* Mode Switcher Pill: True iOS 26 Liquid Glass Hold-and-Scrub Lens */}
+              <div className="flex items-center justify-between gap-2 overflow-visible">
+                <LiquidGlassSegmented<ApplicationMode>
+                  value={appMode}
+                  onChange={handleModeChange}
+                  theme={theme}
+                  size="sm"
+                  ariaLabel="Calculator Mode"
+                  className="min-w-[204px]"
+                  options={[
+                    {
+                      value: 'default',
+                      label: t.defaultMode,
+                      id: 'mode-pill-default',
+                    },
+                    {
+                      value: 'complete',
+                      label: t.completeMode,
+                      id: 'mode-pill-complete',
+                    },
+                  ]}
+                />
 
                 {appMode === 'complete' && memory.hasValue && (
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full tempered-glass-surface text-[11px] font-medium text-[#0A1128]/80 dark:text-white/80">
