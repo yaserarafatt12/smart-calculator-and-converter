@@ -37,30 +37,30 @@ export const AllResultsDrawer: React.FC<AllResultsDrawerProps> = ({
     setTimeout(() => setCopiedId(null), 1500);
   };
 
-  const drawerTitle = language === 'id' ? 'Seluruh Hasil Konversi' : 'All Conversion Results';
+  const drawerTitle = language === 'id' ? 'Semua Hasil Konversi' : 'All Unit Conversions';
   const drawerSubtitle = language === 'id'
-    ? `${fromValue} ${fromUnit} dalam seluruh satuan`
-    : `${fromValue} ${fromUnit} in all available units`;
+    ? `${fromValue} ${fromUnit} dalam setiap satuan`
+    : `${fromValue} ${fromUnit} across all units`;
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
       {/* Backdrop Overlay */}
       <div
-        className="absolute inset-0 bg-slate-950/70 backdrop-blur-md animate-fade-in"
+        className="absolute inset-0 bg-black/55 backdrop-blur-md animate-fade-in"
         onClick={onClose}
       />
 
       {/* Drawer Container — Midnight Navy Tempered Glass */}
-      <div className="relative w-full max-w-sm tempered-glass-card rounded-[30px] p-5 z-10 flex flex-col max-h-[85vh] font-sans text-slate-900 dark:text-white animate-modal-pop">
+      <div className="relative w-full max-w-sm tempered-glass-modal rounded-[28px] p-5 z-10 flex flex-col max-h-[85vh] font-sans text-[#0A1128] dark:text-white animate-modal-pop">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-900/10 dark:border-white/12 shrink-0">
+        <div className="flex items-center justify-between pb-3 border-b border-[#0A1128]/[0.08] dark:border-white/12 shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl liquid-glass-lens text-white">
-              <Layers strokeWidth={2.5} className="w-4 h-4" />
+            <div className="p-2 rounded-xl bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.18] text-[#0A1128]/80 dark:text-white/85">
+              <Layers strokeWidth={2} className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-extrabold tracking-tight">{drawerTitle}</h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+              <h3 className="text-sm font-semibold tracking-tight">{drawerTitle}</h3>
+              <p className="text-[11px] text-[#0A1128]/55 dark:text-white/55 font-medium">
                 {drawerSubtitle}
               </p>
             </div>
@@ -68,10 +68,10 @@ export const AllResultsDrawer: React.FC<AllResultsDrawerProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-full tempered-glass-surface text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors btn-press-effect"
+            className="p-2 rounded-full bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.18] text-[#0A1128]/70 hover:text-[#0A1128] dark:text-white/75 dark:hover:text-white transition-colors btn-press-effect"
             aria-label="Close"
           >
-            <X strokeWidth={2.5} className="w-4 h-4" />
+            <X strokeWidth={2} className="w-4 h-4" />
           </button>
         </div>
 
@@ -80,13 +80,13 @@ export const AllResultsDrawer: React.FC<AllResultsDrawerProps> = ({
           {allResults.map((item) => (
             <div
               key={item.unitId}
-              className="p-3 rounded-2xl tempered-glass-surface flex items-center justify-between gap-2 hover:border-sky-400/50 transition-all"
+              className="p-3 rounded-2xl tempered-glass-surface flex items-center justify-between gap-2 hover:border-black/[0.16] dark:hover:border-white/28 transition-all"
             >
               <div className="min-w-0 flex-1">
-                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block truncate">
+                <span className="text-[11px] font-medium text-[#0A1128]/55 dark:text-white/55 block truncate">
                   {item.name} ({item.symbol})
                 </span>
-                <span className="text-sm font-extrabold text-sky-700 dark:text-sky-300 font-sans tabular-nums block truncate">
+                <span className="text-sm font-semibold text-[#0A1128] dark:text-white font-sans tabular-nums block truncate">
                   {item.formattedValue}
                 </span>
               </div>
@@ -94,17 +94,17 @@ export const AllResultsDrawer: React.FC<AllResultsDrawerProps> = ({
               <button
                 type="button"
                 onClick={() => handleCopy(item.unitId, String(item.value))}
-                className="px-3 py-1.5 rounded-full tempered-glass-surface hover:border-sky-400/60 text-slate-800 dark:text-sky-200 text-xs font-bold transition-all shrink-0 flex items-center gap-1 btn-press-effect"
+                className="px-3 py-1.5 rounded-full bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.18] hover:border-black/[0.16] dark:hover:border-white/30 text-[#0A1128]/85 dark:text-white/85 text-xs font-semibold transition-all shrink-0 flex items-center gap-1 btn-press-effect"
                 title={t?.copyBtn || 'Copy'}
               >
                 {copiedId === item.unitId ? (
                   <>
-                    <Check strokeWidth={2.5} className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
+                    <Check strokeWidth={2.2} className="w-3.5 h-3.5 text-[#00A3FF] dark:text-[#38BDF8]" />
                     <span>{t?.copiedBtn || 'Copied'}</span>
                   </>
                 ) : (
                   <>
-                    <Copy strokeWidth={2.5} className="w-3.5 h-3.5" />
+                    <Copy strokeWidth={2} className="w-3.5 h-3.5" />
                     <span>{t?.copyBtn || 'Copy'}</span>
                   </>
                 )}

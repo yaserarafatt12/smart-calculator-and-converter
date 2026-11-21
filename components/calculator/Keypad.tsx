@@ -27,10 +27,10 @@ export const Keypad: React.FC<KeypadProps> = ({
   const isComplete = appMode === 'complete';
 
   const keys: KeyConfig[] = [
-    // Row 1: AC and C side-by-side!
+    // Row 1: AC and C side-by-side
     { label: 'AC', value: 'AC', type: 'action', testId: 'btn-ac' },
     { label: 'C', value: 'C', type: 'action', testId: 'btn-c' },
-    { label: <Delete className="w-5 h-5 mx-auto" />, value: 'BACKSPACE', type: 'action', testId: 'btn-backspace' },
+    { label: <Delete strokeWidth={2} className="w-5 h-5 mx-auto" />, value: 'BACKSPACE', type: 'action', testId: 'btn-backspace' },
     { label: '÷', value: '/', type: 'operator', keyboardHint: '/', testId: 'btn-divide' },
 
     // Row 2
@@ -43,7 +43,7 @@ export const Keypad: React.FC<KeypadProps> = ({
     { label: '4', value: '4', type: 'number', testId: 'btn-4' },
     { label: '5', value: '5', type: 'number', testId: 'btn-5' },
     { label: '6', value: '6', type: 'number', testId: 'btn-6' },
-    { label: '-', value: '-', type: 'operator', keyboardHint: '-', testId: 'btn-subtract' },
+    { label: '−', value: '-', type: 'operator', keyboardHint: '-', testId: 'btn-subtract' },
 
     // Row 4
     { label: '1', value: '1', type: 'number', testId: 'btn-1' },
@@ -60,20 +60,19 @@ export const Keypad: React.FC<KeypadProps> = ({
   const getKeyStyle = (type: KeyConfig['type']) => {
     switch (type) {
       case 'number':
-        return 'glass-key-num text-slate-900 dark:text-white font-extrabold tabular-nums';
+        return 'glass-key-num text-[#0A1128] dark:text-white font-semibold tabular-nums';
       case 'operator':
-        return 'glass-key-op text-white font-extrabold';
+        return 'glass-key-op font-semibold';
       case 'equals':
-        return 'glass-key-eq text-white font-extrabold';
+        return 'glass-key-eq font-semibold';
       case 'action':
-        return 'glass-key-action text-rose-600 dark:text-rose-300 font-extrabold';
+        return 'glass-key-action font-semibold text-base sm:text-lg';
     }
   };
 
   return (
     <div id="calculator-keypad" className="w-full mt-auto pt-1.5">
-      {/* Keypad Grid: Smooth Spring Transition when morphing button height */}
-      <div className={`grid grid-cols-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isComplete ? 'gap-1.5 sm:gap-2' : 'gap-2.5 sm:gap-3'}`}>
+      <div className={`grid grid-cols-4 transition-all duration-300 ${isComplete ? 'gap-1.5 sm:gap-2' : 'gap-2.5 sm:gap-3'}`}>
         {keys.map((key, idx) => (
           <button
             key={`${key.value}-${idx}`}
@@ -88,8 +87,8 @@ export const Keypad: React.FC<KeypadProps> = ({
               }
             }}
             className={`relative ${
-              isComplete ? 'h-11 sm:h-12 text-lg sm:text-xl' : 'h-14 sm:h-[60px] text-2xl sm:text-[26px]'
-            } rounded-2xl font-extrabold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] btn-press-effect flex items-center justify-center select-none ${
+              isComplete ? 'h-11 sm:h-12 text-lg sm:text-xl' : 'h-14 sm:h-[58px] text-xl sm:text-2xl'
+            } rounded-2xl transition-all duration-200 btn-press-effect flex items-center justify-center select-none ${
               key.colSpan || ''
             } ${getKeyStyle(key.type)}`}
           >

@@ -33,7 +33,7 @@ import {
 
 export default function Home() {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-  const [language, setLanguage] = useState<Language>('en'); // Default to English, with browser auto-detect
+  const [language, setLanguage] = useState<Language>('en');
   const [activeTab, setActiveTab] = useState<TabType>('calculator');
   const [appMode, setAppMode] = useState<ApplicationMode>('default');
   const [angleMode, setAngleMode] = useState<AngleMode>('degree');
@@ -56,7 +56,7 @@ export default function Home() {
 
   const t = TRANSLATIONS[language];
 
-  // Load persistent mode, theme, and language on mount with browser language auto-detection
+  // Load persistent mode, theme (dark by default), and language on mount
   useEffect(() => {
     setHistoryState(getHistory());
     setMemoryState(getStoredMemory());
@@ -68,20 +68,14 @@ export default function Home() {
         setAppMode(savedMode);
       }
 
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const applyTheme = (isDark: boolean) => {
-        setTheme(isDark ? 'dark' : 'light');
-        if (isDark) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      };
-
-      applyTheme(mediaQuery.matches);
-      const listener = (e: MediaQueryListEvent) => applyTheme(e.matches);
-      mediaQuery.addEventListener('change', listener);
-      return () => mediaQuery.removeEventListener('change', listener);
+      const savedTheme = localStorage.getItem('smart_calc_theme');
+      const initialDark = savedTheme ? savedTheme === 'dark' : true;
+      setTheme(initialDark ? 'dark' : 'light');
+      if (initialDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     }
   }, []);
 
@@ -95,6 +89,9 @@ export default function Home() {
   const handleToggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(nextTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('smart_calc_theme', nextTheme);
+    }
     if (nextTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
@@ -138,7 +135,7 @@ export default function Home() {
       const updatedHistory = addHistory(expression, evaluated.formattedValue);
       setHistoryState(updatedHistory);
     }
-  }, [expression, angleMode]);
+  }, [expression, angleMode, language]);
 
   // Keypad key press dispatcher
   const handleKeyPress = useCallback(
@@ -258,12 +255,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen sm:py-8 sm:px-4 flex flex-col items-center justify-center relative overflow-hidden font-sans">
-      {/* Ambient Midnight Navy Radial Glow Pools */}
-      <div className="hidden sm:block absolute w-[28rem] h-[28rem] rounded-full bg-sky-400/20 dark:bg-sky-500/20 blur-[110px] -top-28 -left-24 pointer-events-none" />
-      <div className="hidden sm:block absolute w-[26rem] h-[26rem] rounded-full bg-indigo-500/20 dark:bg-indigo-600/25 blur-[110px] -bottom-28 -right-24 pointer-events-none" />
-      <div className="hidden sm:block absolute w-72 h-72 rounded-full bg-violet-400/15 dark:bg-violet-500/15 blur-[95px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-
+    <main className="min-h-screen sm:py-8 sm:px-4 flex flex-col items-center justify-center relative overflow-hidden font-sans z-10">
       {/* Phone Chassis Container — Midnight Navy Tempered Glass */}
       <div
         className={`w-full min-h-screen ${
@@ -272,9 +264,9 @@ export default function Home() {
             : appMode === 'complete'
             ? 'sm:min-h-[820px] sm:max-w-[436px]'
             : 'sm:min-h-[720px] sm:max-w-[424px]'
-        } sm:rounded-[44px] phone-chassis p-5 sm:p-6 relative overflow-hidden flex flex-col justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-10`}
+        } sm:rounded-[40px] phone-chassis p-5 sm:p-6 relative overflow-hidden flex flex-col justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-10`}
       >
-        {/* Top Header Bar with Language Switcher & Settings */}
+        {/* Top Header Bar with Minimal Brand Emblem, Utility Controls & Liquid Glass Nav Pill */}
         <Header
           activeTab={activeTab}
           onTabChange={setActiveTab}
@@ -288,11 +280,11 @@ export default function Home() {
           onOpenSettings={() => setShowSettingsModal(true)}
         />
 
-        {/* Main Content View with Buttery Smooth Cross-Fade Slide Tab Animation */}
+        {/* Main Content View */}
         <div className="flex-1 flex flex-col justify-between my-auto relative transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
           {/* CALCULATOR TAB VIEW */}
           <div
-            className={`w-full flex flex-col justify-between h-full flex-1 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu ${
+            className={`w-full flex flex-col justify-between h-full flex-1 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu ${
               activeTab === 'calculator'
                 ? 'opacity-100 scale-100 translate-x-0 relative z-10'
                 : 'opacity-0 scale-95 -translate-x-4 pointer-events-none absolute inset-0 z-0 h-0 overflow-hidden'
@@ -310,24 +302,32 @@ export default function Home() {
               />
             </div>
 
-            {/* BOTTOM SECTION: Mode Switcher Pill + Result Card ALWAYS Sitting Directly Above Keypad */}
-            <div className="w-full mt-auto space-y-2 pt-2">
+            {/* BOTTOM SECTION: Mode Switcher Pill + Result Card + Keypad */}
+            <div className="w-full mt-auto space-y-2.5 pt-2">
               <ErrorHint
                 error={formattedError}
                 onDismiss={() => setFormattedError(null)}
               />
 
-              {/* Mode Switcher Pill: iOS 26 Liquid Glass Segmented Control */}
-              <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center gap-1 liquid-glass-track p-1 rounded-full transition-all duration-300">
+              {/* Mode Switcher Pill: iOS 26 Liquid Glass Sliding Segmented Control */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="relative overflow-visible grid grid-cols-2 liquid-glass-pill p-1 rounded-full min-w-[196px]">
+                  {/* Sliding Refractive Glass Lens */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full liquid-glass-lens-active"
+                    style={{
+                      transform: appMode === 'complete' ? 'translateX(100%)' : 'translateX(0%)',
+                    }}
+                  />
                   <button
                     type="button"
                     id="mode-pill-default"
                     onClick={() => handleModeChange('default')}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-extrabold tracking-tight transition-all duration-300 ease-out btn-press-effect ${
+                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-colors duration-200 ${
                       appMode === 'default'
-                        ? 'liquid-glass-lens-neutral text-sky-700 dark:text-sky-200 font-black scale-[1.02]'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        ? 'text-[#0A1128] dark:text-white'
+                        : 'text-[#0A1128]/55 dark:text-white/55 hover:text-[#0A1128]/85 dark:hover:text-white/85'
                     }`}
                   >
                     {t.defaultMode}
@@ -336,10 +336,10 @@ export default function Home() {
                     type="button"
                     id="mode-pill-complete"
                     onClick={() => handleModeChange('complete')}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-extrabold tracking-tight transition-all duration-300 ease-out btn-press-effect ${
+                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-colors duration-200 ${
                       appMode === 'complete'
-                        ? 'liquid-glass-lens text-white font-black scale-[1.02]'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        ? 'text-[#0A1128] dark:text-white'
+                        : 'text-[#0A1128]/55 dark:text-white/55 hover:text-[#0A1128]/85 dark:hover:text-white/85'
                     }`}
                   >
                     {t.completeMode}
@@ -347,13 +347,14 @@ export default function Home() {
                 </div>
 
                 {appMode === 'complete' && memory.hasValue && (
-                  <span className="px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] text-[10px] font-black animate-pulse">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full tempered-glass-surface text-[11px] font-medium text-[#0A1128]/80 dark:text-white/80">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00A3FF] dark:bg-[#38BDF8]" />
                     {t.memoryActive}
                   </span>
                 )}
               </div>
 
-              {/* Result Card: Sitting Directly Below Mode Switcher Pill & Above Keypad Buttons */}
+              {/* Result Card */}
               <ResultCard
                 result={result}
                 isError={Boolean(formattedError)}
@@ -364,9 +365,9 @@ export default function Home() {
                 t={t}
               />
 
-              {/* Dynamic Keypad View: Complete Mode (Standard Scientific Hierarchy) vs Default Mode */}
+              {/* Dynamic Keypad View */}
               {appMode === 'complete' ? (
-                <div className="animate-in fade-in duration-300">
+                <div className="animate-fade-in">
                   <ScientificKeypad
                     onKeyPress={handleKeyPress}
                     angleMode={angleMode}
@@ -382,7 +383,7 @@ export default function Home() {
                   />
                 </div>
               ) : (
-                <div className="animate-in fade-in duration-300">
+                <div className="animate-fade-in">
                   <Keypad
                     onKeyPress={handleKeyPress}
                     onOpenConverter={() => setActiveTab('converter')}
@@ -395,7 +396,7 @@ export default function Home() {
 
           {/* CONVERTER TAB VIEW */}
           <div
-            className={`w-full pt-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu ${
+            className={`w-full pt-2 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu ${
               activeTab === 'converter'
                 ? 'opacity-100 scale-100 translate-x-0 relative z-10'
                 : 'opacity-0 scale-95 translate-x-4 pointer-events-none absolute inset-0 z-0 h-0 overflow-hidden'
@@ -405,9 +406,9 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Footer */}
-        <footer className="mt-4 pt-2.5 text-center text-[11px] text-slate-500 dark:text-slate-400/90 font-medium border-t border-slate-900/10 dark:border-white/10">
-          Smart Calculator &amp; Unit Converter &copy; 2026 &middot; Mode: {appMode === 'complete' ? t.completeMode : t.defaultMode}
+        {/* Minimal Monochrome Footer */}
+        <footer className="mt-4 pt-2.5 text-center text-[11px] text-[#0A1128]/45 dark:text-white/45 font-normal border-t border-[#0A1128]/[0.08] dark:border-white/[0.10]">
+          Smart Calc &copy; 2026 &middot; {appMode === 'complete' ? t.completeMode : t.defaultMode}
         </footer>
 
         {/* Settings & Guidebook Modal Overlay */}
@@ -425,22 +426,22 @@ export default function Home() {
         {showHistoryModal && (
           <div
             onClick={() => setShowHistoryModal(false)}
-            className="absolute inset-0 z-50 bg-slate-950/65 backdrop-blur-md flex flex-col justify-end animate-fade-in cursor-pointer"
+            className="absolute inset-0 z-50 bg-black/55 backdrop-blur-md flex flex-col justify-end animate-fade-in cursor-pointer"
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="tempered-glass-card rounded-t-[36px] border-x-0 border-b-0 p-5 sm:p-6 max-h-[85%] overflow-y-auto space-y-4 animate-sheet-up cursor-default"
+              className="tempered-glass-modal rounded-t-[32px] border-x-0 border-b-0 p-5 sm:p-6 max-h-[85%] overflow-y-auto space-y-4 animate-sheet-up cursor-default"
             >
               {/* iOS Grabber Pill */}
-              <div className="w-10 h-1 rounded-full bg-slate-400/40 dark:bg-white/25 mx-auto -mt-1 mb-1" />
+              <div className="w-10 h-1 rounded-full bg-[#0A1128]/20 dark:bg-white/25 mx-auto -mt-1 mb-1" />
               <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold tracking-wide uppercase text-sky-700 dark:text-sky-300">
+                <span className="text-xs font-semibold tracking-tight text-[#0A1128] dark:text-white">
                   {t.historyTitle}
                 </span>
                 <button
                   type="button"
                   onClick={() => setShowHistoryModal(false)}
-                  className="text-xs font-bold text-slate-700 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white px-3.5 py-1.5 rounded-full tempered-glass-surface btn-press-effect"
+                  className="text-xs font-semibold text-[#0A1128]/80 hover:text-[#0A1128] dark:text-white/80 dark:hover:text-white px-3.5 py-1.5 rounded-full tempered-glass-surface btn-press-effect"
                 >
                   {t.close}
                 </button>

@@ -8,11 +8,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-sans)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
       colors: {
         brand: {
           50: '#f0f9ff',
           100: '#e0f2fe',
-          500: '#0ea5e9',
+          400: '#38bdf8',
+          500: '#00a3ff',
           600: '#0284c7',
           700: '#0369a1',
         },

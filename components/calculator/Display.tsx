@@ -17,6 +17,7 @@ export const Display: React.FC<DisplayProps> = ({
   expression,
   errorIndex = null,
   isError = false,
+  t,
 }) => {
   // Helper to format expression display (* -> × and / -> ÷)
   const formatExpressionForDisplay = (str: string) => {
@@ -27,7 +28,7 @@ export const Display: React.FC<DisplayProps> = ({
   const renderExpressionWithHighlight = () => {
     if (!expression) {
       return (
-        <span className="text-slate-400/80 dark:text-slate-400/50 italic select-none">
+        <span className="text-[#0A1128]/35 dark:text-white/35 select-none">
           0
         </span>
       );
@@ -45,7 +46,7 @@ export const Display: React.FC<DisplayProps> = ({
           {before}
           <span
             data-testid="error-highlight"
-            className="inline-block bg-rose-500/20 text-rose-600 dark:text-rose-300 font-bold px-1.5 py-0.5 rounded-lg ring-1 ring-rose-400/70 animate-pulse"
+            className="inline-block bg-black/[0.08] dark:bg-white/[0.14] text-[#0A1128] dark:text-white font-bold px-1.5 py-0.5 rounded-lg ring-1 ring-[#00A3FF]/60 dark:ring-[#38BDF8]/60"
             title={`Error on index ${errorIndex}: '${errChar}'`}
           >
             {errChar}
@@ -61,13 +62,14 @@ export const Display: React.FC<DisplayProps> = ({
   return (
     <div
       id="calculator-display-container"
-      className="w-full pt-2 pb-1 px-1.5 flex flex-col text-right relative overflow-hidden"
+      className="w-full pt-2 pb-1 px-1 flex flex-col text-right relative overflow-hidden"
     >
-      {/* Error alert indicator */}
+      {/* Error indicator pill */}
       {isError && (
         <div className="flex items-center justify-start text-xs mb-1.5 animate-fade-in">
-          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-600 dark:bg-rose-500/20 dark:text-rose-300 border border-rose-400/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]">
-            <AlertCircle strokeWidth={2.5} className="w-3 h-3" /> Syntax Error
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded-full tempered-glass-surface text-[#0A1128]/85 dark:text-white/85">
+            <AlertCircle strokeWidth={2.2} className="w-3 h-3 text-[#00A3FF] dark:text-[#38BDF8]" />
+            {t?.syntaxError || 'Check Expression'}
           </span>
         </div>
       )}
@@ -76,10 +78,10 @@ export const Display: React.FC<DisplayProps> = ({
       <div
         id="calculator-expression"
         data-testid="calculator-expression"
-        className="text-right text-slate-600 dark:text-slate-300/90 font-sans tabular-nums text-xl sm:text-2xl font-bold tracking-wide overflow-x-auto py-2.5 scrollbar-none min-h-[3.25rem]"
+        className="text-right text-[#0A1128]/70 dark:text-white/75 font-sans tabular-nums text-xl sm:text-2xl font-medium tracking-tight overflow-x-auto py-2.5 scrollbar-none min-h-[3.25rem]"
       >
         {renderExpressionWithHighlight()}
-        <span className="inline-block w-[2px] h-6 bg-sky-500 dark:bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.75)] ml-1 rounded-full animate-cursor align-middle" />
+        <span className="inline-block w-[2px] h-6 bg-[#00A3FF] dark:bg-[#38BDF8] ml-1 rounded-full animate-cursor align-middle" />
       </div>
     </div>
   );
@@ -103,7 +105,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
-  // Copy raw exact un-rounded value to clipboard!
+  // Copy raw exact un-rounded value to clipboard
   const handleCopyResult = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (result !== null && result !== undefined) {
@@ -113,10 +115,10 @@ export const ResultCard: React.FC<ResultCardProps> = ({
     }
   };
 
-  // Helper to format display result with clean Thousands Separator & Max 6 Decimals for card view
+  // Format display result with clean thousands separator & max 6 decimals for card view
   const formatDisplayResult = (val: string | number | null): string => {
     if (val === null || val === undefined) return '0';
-    if (typeof val === 'string' && isNaN(Number(val))) return val; // e.g. "Error"
+    if (typeof val === 'string' && isNaN(Number(val))) return val;
 
     const num = typeof val === 'number' ? val : Number(val);
     if (isNaN(num)) return String(val);
@@ -136,41 +138,41 @@ export const ResultCard: React.FC<ResultCardProps> = ({
   const resultLabelText = t?.resultLabel ?? (language === 'id' ? 'Hasil' : 'Result');
   const copyBtnText = t?.copyBtn ?? (language === 'id' ? 'Salin' : 'Copy');
   const copiedBtnText = t?.copiedBtn ?? (language === 'id' ? 'Tersalin' : 'Copied');
-  const copyTooltipText = t?.copyTooltip ?? (language === 'id' ? 'Salin Hasil Asli Presisi Lengkap' : 'Copy High-Precision Exact Result');
+  const copyTooltipText = t?.copyTooltip ?? (language === 'id' ? 'Salin hasil presisi penuh' : 'Copy exact full-precision result');
 
   return (
     <div
       id="calculator-result"
       data-testid="calculator-result"
       onClick={onClickDetail}
-      className="w-full p-3.5 sm:p-4 rounded-2xl tempered-glass-card flex items-center justify-between gap-3 cursor-pointer hover:border-sky-400/55 transition-all duration-200"
+      className="w-full p-3.5 sm:p-4 rounded-2xl tempered-glass-card flex items-center justify-between gap-3 cursor-pointer hover:border-[#00A3FF]/40 dark:hover:border-[#38BDF8]/40 transition-all duration-200"
     >
       {/* Left: Formatted Result Value */}
       <div className="flex-1 min-w-0 text-left">
-        <span className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300/90 block mb-0.5">
+        <span className="text-[11px] font-medium uppercase tracking-wider text-[#0A1128]/50 dark:text-white/55 block mb-0.5">
           {resultLabelText}
         </span>
-        <div className="text-2xl sm:text-3xl font-sans tabular-nums font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
+        <div className="text-2xl sm:text-3xl font-sans tabular-nums font-semibold tracking-tight text-[#0A1128] dark:text-white truncate">
           {formatDisplayResult(result)}
         </div>
       </div>
 
-      {/* Far Right: Liquid Glass Copy Pill */}
+      {/* Far Right: Monochrome Tempered Glass Copy Pill */}
       {result !== null && !isError && (
         <button
           type="button"
           onClick={handleCopyResult}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-full liquid-glass-lens text-white text-xs font-extrabold shrink-0 transition-all btn-press-effect"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.18] text-[#0A1128]/85 dark:text-white/90 hover:border-black/[0.16] dark:hover:border-white/30 text-xs font-semibold shrink-0 transition-all btn-press-effect"
           title={copyTooltipText}
         >
           {copied ? (
             <>
-              <Check strokeWidth={2.5} className="w-3.5 h-3.5 text-emerald-200" />
+              <Check strokeWidth={2.2} className="w-3.5 h-3.5 text-[#00A3FF] dark:text-[#38BDF8]" />
               <span>{copiedBtnText}</span>
             </>
           ) : (
             <>
-              <Copy strokeWidth={2.5} className="w-3.5 h-3.5" />
+              <Copy strokeWidth={2} className="w-3.5 h-3.5" />
               <span>{copyBtnText}</span>
             </>
           )}

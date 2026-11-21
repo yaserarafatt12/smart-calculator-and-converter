@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Copy, Check, ArrowUpRight, Sparkles } from 'lucide-react';
+import { X, Copy, Check, ArrowUpRight, SlidersHorizontal } from 'lucide-react';
 import { CalculationResult } from '@/lib/calculator/types';
 import { Language, TRANSLATIONS } from '@/lib/i18n/translations';
 
@@ -35,58 +35,58 @@ export const ResultDetailModal: React.FC<ResultDetailModalProps> = ({
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
       {/* Backdrop Overlay */}
       <div
-        className="absolute inset-0 bg-slate-950/70 backdrop-blur-md animate-fade-in"
+        className="absolute inset-0 bg-black/55 backdrop-blur-md animate-fade-in"
         onClick={onClose}
       />
 
       {/* Modal Container — Midnight Navy Tempered Glass */}
-      <div className="relative w-full max-w-sm tempered-glass-card rounded-[30px] p-5 z-10 space-y-4 font-sans text-slate-900 dark:text-white animate-modal-pop">
+      <div className="relative w-full max-w-sm tempered-glass-modal rounded-[28px] p-5 z-10 space-y-4 font-sans text-[#0A1128] dark:text-white animate-modal-pop">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-900/10 dark:border-white/12">
+        <div className="flex items-center justify-between pb-3 border-b border-[#0A1128]/[0.08] dark:border-white/12">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl liquid-glass-lens text-white">
-              <Sparkles strokeWidth={2.5} className="w-4 h-4" />
+            <div className="p-2 rounded-xl bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.18] text-[#0A1128]/80 dark:text-white/85">
+              <SlidersHorizontal strokeWidth={2} className="w-4 h-4" />
             </div>
-            <h3 className="text-sm font-extrabold tracking-tight">{t.resultDetailTitle}</h3>
+            <h3 className="text-sm font-semibold tracking-tight">{t.resultDetailTitle}</h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-full tempered-glass-surface text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors btn-press-effect"
+            className="p-2 rounded-full bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.18] text-[#0A1128]/70 hover:text-[#0A1128] dark:text-white/75 dark:hover:text-white transition-colors btn-press-effect"
             aria-label={t.close}
           >
-            <X strokeWidth={2.5} className="w-4 h-4" />
+            <X strokeWidth={2} className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content Section */}
         <div className="space-y-3">
-          {/* Nilai Lengkap */}
+          {/* Full Precision Value */}
           <div className="p-3.5 rounded-2xl tempered-glass-surface space-y-1">
-            <span className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300">
+            <span className="text-[11px] font-medium uppercase tracking-wider text-[#0A1128]/50 dark:text-white/55">
               {t.fullPrecisionValue}
             </span>
-            <div className="text-base font-extrabold font-sans tabular-nums break-all select-all text-slate-900 dark:text-white">
+            <div className="text-base font-semibold font-sans tabular-nums break-all select-all text-[#0A1128] dark:text-white">
               {result.rawValue}
             </div>
           </div>
 
-          {/* Notasi Ilmiah */}
+          {/* Scientific Notation */}
           {result.scientificNotation && (
             <div className="p-3.5 rounded-2xl tempered-glass-surface space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300">
+              <span className="text-[11px] font-medium uppercase tracking-wider text-[#0A1128]/50 dark:text-white/55">
                 {t.scientificNotationLabel}
               </span>
-              <div className="text-sm font-extrabold font-sans tabular-nums text-slate-900 dark:text-white">
+              <div className="text-sm font-semibold font-sans tabular-nums text-[#0A1128] dark:text-white">
                 {result.scientificNotation}
               </div>
             </div>
           )}
 
-          {/* Detail Info */}
-          <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 font-semibold px-1">
+          {/* Status Info */}
+          <div className="flex items-center justify-between text-xs text-[#0A1128]/65 dark:text-white/65 font-medium px-1">
             <span>{t.valueStatusLabel}</span>
-            <span className="font-bold text-sky-700 dark:text-sky-300">
+            <span className="font-semibold text-[#0A1128] dark:text-white">
               {result.isApproximate ? t.approximateValue : t.exactValue}
             </span>
           </div>
@@ -97,12 +97,12 @@ export const ResultDetailModal: React.FC<ResultDetailModalProps> = ({
           <button
             type="button"
             onClick={() => handleCopy(result.rawValue)}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl tempered-glass-surface hover:border-sky-400/50 text-xs font-extrabold transition-all btn-press-effect"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl tempered-glass-surface text-[#0A1128]/85 dark:text-white/85 hover:text-[#0A1128] dark:hover:text-white text-xs font-semibold transition-all btn-press-effect"
           >
             {copied ? (
-              <Check strokeWidth={2.5} className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+              <Check strokeWidth={2.2} className="w-4 h-4 text-[#00A3FF] dark:text-[#38BDF8]" />
             ) : (
-              <Copy strokeWidth={2.5} className="w-4 h-4 text-sky-600 dark:text-sky-300" />
+              <Copy strokeWidth={2} className="w-4 h-4" />
             )}
             <span>{copied ? t.copiedBtn : t.copyValueBtn}</span>
           </button>
@@ -113,9 +113,9 @@ export const ResultDetailModal: React.FC<ResultDetailModalProps> = ({
               onUseAsInput(result.rawValue);
               onClose();
             }}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl liquid-glass-lens text-white text-xs font-extrabold transition-all btn-press-effect"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl primary-cta-btn text-xs font-semibold transition-all btn-press-effect"
           >
-            <ArrowUpRight strokeWidth={2.5} className="w-4 h-4" />
+            <ArrowUpRight strokeWidth={2.2} className="w-4 h-4" />
             <span>{t.useAsInputBtn}</span>
           </button>
         </div>

@@ -1,6 +1,13 @@
 import React from 'react';
 import type { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Smart Calculator & Unit Converter',
@@ -14,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#070f20',
+  themeColor: '#09152B',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -26,13 +33,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className="dark">
+    <html lang="en" className={`${inter.variable} dark`}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body className="antialiased min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      <body className="font-sans antialiased min-h-screen text-[#0A1128] dark:text-white transition-colors duration-300">
+        {/* Quest Ambient Energy Overlay */}
+        <div className="quest-ambient-bg" aria-hidden="true" />
+        {/* Quest Subtle Fractal Noise Texture */}
+        <div className="quest-noise-bg" aria-hidden="true" />
         {children}
       </body>
     </html>
